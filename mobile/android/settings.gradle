@@ -1,0 +1,3 @@
+rootProject.name = 'uaiComida'
+
+include ':app'
