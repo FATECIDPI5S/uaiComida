@@ -1,9 +1,7 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation'
-import AppNavigator from './routes';
-import './config/StatusBarConfig'
+import Routes from './routes';
+import './config/StatusBarConfig';
 
-const AppContainer = createAppContainer(AppNavigator);
-const App = () => <AppContainer />
+const App = () => <Routes />;
 
 export default App;

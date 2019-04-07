@@ -1,44 +1,23 @@
-import { createDrawerNavigator } from 'react-navigation';
-import Login from './screens/Login'
-import NewUser from './screens/NewUser'
-// import Intro from './screens/Intro'
-import Main from './screens/Main'
-// import About from './screens/About'
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-export default AppNavigator = createDrawerNavigator({
+import LoginScreen from './screens/Login'
+import MainScreen from './screens/Main'
 
+const MainNavigator = createStackNavigator({
     Login: {
-        screen: Login,
-        navigationOptions: () => ({
-            title: 'uaiComida',
-        }),
+        screen: LoginScreen,
+        navigationOptions: {
+            header: null
+        },
     },
-
-    NewUser: {
-        screen: NewUser,
-        navigationOptions: () => ({
-            title: 'Cadastro',
-        }),
-    },
-
-    // Intro: {
-    //     screen: Intro,
-    //     navigationOptions: () => ({
-    //         title: 'Introdução',
-    //     }),
-    // },
-
     Main: {
-        screen: Main,
-        navigationOptions: () => ({
-            title: 'Menu principal',
-        }),
+        screen: MainScreen,
+        navigationOptions: {
+            header: null
+        },
     },
-
-    // About: {
-    //     screen: About,
-    //     navigationOptions: () => ({
-    //         title: 'Sobre',
-    //     }),
-    // },
 });
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
