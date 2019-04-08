@@ -1,4 +1,4 @@
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import LoginScreen from './screens/Login'
 import SignUpScreen from './screens/Signup'
@@ -20,17 +20,21 @@ const MainNavigator = createStackNavigator({
     Main: {
         screen: MainScreen,
         navigationOptions: {
-            header: null
+            title: 'uaiComida',
+            headerStyle: {
+                backgroundColor: '#ff3f34'
+            },
+            headerTintColor: '#fff'
         },
     },
-},{
-    defaultNavigationOptions: {
-        headerStyle: {
-            backgroundColor: '#ff3f34'
-        },
-        headerTintColor: '#fff'
-    }
-});
+}, {
+        defaultNavigationOptions: {
+            headerStyle: {
+                color: '#FFF',
+            },
+            headerTintColor: '#FFF',
+        }
+    });
 
 const App = createAppContainer(MainNavigator);
 
