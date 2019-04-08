@@ -1,167 +1,138 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity, Image, Alert } from 'react-native';
-//import firebase from 'react-native-firebase';
+import React, {Component} from 'react';
+import {View, StyleSheet,  Image, Text, TextInput, TouchableOpacity} from 'react-native';
+import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class Login extends Component {
-
-    state = {
-        email: '',
-        password: '',
-        isAuthenticated: false,
-        abc: '',
-    };
-
-    mensagem = (msg) => {
-        Alert.alert(
-            'Falha ao acessar',
-            msg.toString(),
-            [
-                { text: 'Quero me cadastrar', onPress: () => this.props.navigation.navigate('CadastrarUsuario') },
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
-            ],
-            { cancelable: false },
-        );
-    };
-
-    login = async () => {
-        const { email, password } = this.state;
-        if (email && password) {
-
-            try {
-                //const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-                this.setState({ isAuthenticated: true });
-                this.props.navigation.navigate('Main');
-                console.log(user);
-
-            } catch (error) {
-                console.log(error);
-                this.mensagem(error);
-            }
-
-        } else {
-            this.mensagem('Preencha os campos.');
-        }
-    };
-
+export default class App extends Component {
     render() {
         return (
-            <View style={styles.container}>
+          //<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+          //For apps:
+          //Place the attribution on the credits/description page of the application.
+          <View style={styles.container}>
 
-                <View style={{}}>
-                    <Image
-                        style={styles.logo}
-                        source={require('../img/logo.png')}>
-                    </Image>
-                </View>
+            <View style={styles.logoContainer}>
+              <Image
+                style={styles.logo}
+                source={require('../img/logo.png')}/>    
+              <Text style={styles.title}>uaiComida</Text>        
+            </View>
 
-                <View style={styles.inputContainer}>
-                    <Icon style={styles.inputIcon} name="user" color="#4F8EF7" size={35} />
-                    <TextInput
-                        placeholder="Digite seu e-mail"
-                        placeholderStyle={{ marginBottom: 0 }}
-                        style={styles.input}
-                        value={this.state.email}
-                        onChangeText={email => this.setState({ email })}
-                        returnKeyType={"next"}
-                        onSubmitEditing={() => { this.secondTextInput.focus(); }}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Icon style={styles.inputIcon} name="lock" color="#4F8EF7" size={35} />
-                    <TextInput
-                        placeholder="Digite sua senha"
-                        placeholderStyle={{ marginBottom: 0 }}
-                        style={styles.input}
-                        value={this.state.password}
-                        onChangeText={password => this.setState({ password })}
-                        secureTextEntry={true} returnKeyType={"go"}
-                        ref={(input) => { this.secondTextInput = input; }}
-                        // onSubmitEditing={this.login}
-                        onSubmitEditing={this.props.navigation.navigate('Main')}
-                    />
-                </View>
+            <View style={styles.formContainer}>
 
+              <View style={styles.inputContainer}>
+                <Icon
+                  style={styles.inputIcon}
+                  name='user'
+                  size={25}
+                />
+                <TextInput
+                  placeholder='Digite seu e-mail'
+                  keyboardType='email-address'
+                  placeholderTextColor='rgba(255, 255, 255, 0.6)'
+                  returnKeyType='next'
+                  onSubmitEditing={() => this.passwordInput.focus()}
+                  autoCapitalize='none'
+                  autoCorrect={false}
+                  style={styles.inputText}
+                />
+              </View>
+              
+              <View style={styles.inputContainer}>
+                <Icon
+                  style={styles.inputIcon}
+                  name='lock'
+                  size={25}
+                />
+                <TextInput
+                  placeholder='Digite sua senha'
+                  keyboardType='email-address'
+                  placeholderTextColor='rgba(255, 255, 255, 0.6)'
+                  returnKeyType='go'
+                  ref={(input) => this.passwordInput = input}
+                  style={styles.inputText}
+                />
+              </View>
 
-                <TouchableOpacity style={styles.link} onPress={() => this.props.navigation.navigate('NewUser')}>
-                    <Text style={styles.linkText}>Cadastre-se agora!</Text>
-                </TouchableOpacity>
+              <Button
+                title="ENTRAR"
+                containerStyle={{
+                  width: '85%',                  
+                }}
+                buttonStyle={styles.buttonContainer}
+                titleStyle={styles.buttonText}
+                onPress={() => this.props.navigation.navigate('Main')}
+              />
 
-                {/* <TouchableOpacity style={styles.button} onPress={this.login}> */}
-                <TouchableOpacity style={styles.button} onPress={this.props.navigation.navigate('Main')}>
-                    <Icon name="sign-in" color="#4F8EF7" size={50} />
-                    <Text style={styles.buttonText}>Acessar</Text>
-                </TouchableOpacity>
-            </View >
+              <Button
+                title="INSCREVA-SE"
+                containerStyle={{
+                  width: '85%',                  
+                }}
+                buttonStyle={styles.buttonContainer}
+                titleStyle={styles.buttonText}
+                onPress={() => this.props.navigation.navigate('SignUp')}
+              />
+
+            </View>
+
+          </View>
         );
-    };
-
-    componentDidMount() {
-        console.log('Usuário logado: ', this.state.isAuthenticated)
-    }
-
-    componentDidUpdate() {
-        console.log('Usuário logado: ', this.state.isAuthenticated)
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    logo: {
-        width: 175,
-        height: 175,
-        marginBottom: 15,
-    },
-    link: {
-
-    },
-    linkText: {
-        color: '#9CC',
-        fontSize: 12,
-        margin: 10,
-        marginBottom: 0,
-    },
-    button: {
-        backgroundColor: 'transparent',
-        height: 60,
-        width: 250,
-        marginTop: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        borderRadius: 50,
-        borderWidth: 1,
-        borderColor: "#CCC",
-    },
-    buttonText: {
-        textAlign: 'center',
-        paddingLeft: 10,
-        fontSize: 16,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        textAlign: 'center',
-        backgroundColor: '#fff',
-        width: '90%',
-        height: 48,
-        borderWidth: 1,
-        borderColor: '#CCC',
-        borderRadius: 8,
-        margin: 5,
-    },
-    inputIcon: {
-        paddingLeft: 10,
-    },
-    input: {
-        flex: 1,
-        fontSize: 16,
-        paddingRight: 38,
-        textAlign: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#ff3f34',
+    justifyContent: 'space-evenly',
+  },
+  logoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: '#fff',
+    fontSize: 16,
+    marginTop: 5,    
+    textAlign: 'center',
+    opacity: 0.6,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  formContainer: {
+    alignItems: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ff5e57',
+    width: '85%',
+    height: 40,
+    borderRadius: 30,
+    marginBottom: 10,
+  },
+  inputIcon: {
+    paddingLeft: 20,
+    paddingRight: 10,
+    color: '#fff',
+    opacity: 0.6,
+  },
+  inputText: {
+    flex: 1,
+    paddingRight: 20,
+    color: '#fff',
+    fontSize: 16,
+  },
+  buttonContainer: {
+    backgroundColor: '#c0392b',
+    height: 40,
+    marginTop: 10,
+    borderRadius: 30,
+  },
+  buttonText: {
+    color: 'rgba(255, 255, 255, 0.6)',
+  },
 });

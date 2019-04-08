@@ -16,11 +16,8 @@ export default class Main extends Component {
     // }
 
     render() {
-
-        const navigation = this.props.navigation;
-
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1,backgroundColor: '#ff3f34', }}>
                 <View style={{ alignSelf: 'center', marginTop: 10 }}>
                     <Text style={{ fontSize: 18 }}>Ferramentas</Text>
                 </View>
@@ -29,7 +26,7 @@ export default class Main extends Component {
     };
 
     componentWillUnmount() {
-        this.signOutUser();
+        //this.signOutUser();
     }
 }
 
