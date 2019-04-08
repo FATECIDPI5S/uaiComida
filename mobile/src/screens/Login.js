@@ -3,7 +3,7 @@ import {View, StyleSheet,  Image, Text, TextInput, TouchableOpacity} from 'react
 import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class App extends Component {
+export default class Login extends Component {
     render() {
         return (
           //<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 26,
     marginTop: 5,    
     textAlign: 'center',
-    opacity: 0.6,
+    opacity: 0.8,
   },
   logo: {
     width: 100,

@@ -19,7 +19,7 @@ export default class Main extends Component {
         return (
             <View style={{ flex: 1,backgroundColor: '#ff3f34', }}>
                 <View style={{ alignSelf: 'center', marginTop: 10 }}>
-                    <Text style={{ fontSize: 18 }}>Ferramentas</Text>
+                    <Text style={{ fontSize: 18, color: '#FFF' }}>Ferramentas</Text>
                 </View>
             </View>
         );

@@ -17,7 +17,7 @@ const options = {
     },
 };
 
-export default class NewUser extends Component {
+export default class Signup extends Component {
 
     state = {
         email: '',

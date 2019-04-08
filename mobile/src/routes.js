@@ -1,8 +1,8 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-import LoginScreen from './screens/login'
-import SignUpScreen from './screens/signup'
-import MainScreen from './screens/main'
+import LoginScreen from './screens/Login'
+import SignUpScreen from './screens/Signup'
+import MainScreen from './screens/Main'
 
 const MainNavigator = createStackNavigator({
     Login: {
