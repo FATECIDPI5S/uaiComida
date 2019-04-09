@@ -50,8 +50,10 @@ export default class Main extends Component {
 
                 <View style={styles.pickerContainer}>
                     <Picker
+                        mode={'dialog'}
                         selectedValue={this.state.ambiente}
                         style={styles.picker}
+                        itemStyle={styles.pickerItem}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({ ambiente: itemValue })
                         }>
@@ -83,15 +85,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 50,
+        marginVertical: 50,
     },
     picker: {
+        height: 50,
+        width: '92%',
+        borderWidth: 1,
+        borderColor: '#ff3f34',
+        color: '#FFF',
+        borderRadius: 999,
+        backgroundColor: '#ff3f34',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    pickerItem: {
         height: 50,
         width: '100%',
         borderWidth: 1,
         borderColor: '#ff3f34',
         color: '#FFF',
-        //borderRadius: 10,
+        borderRadius: 999,
         backgroundColor: '#ff3f34',
         alignItems: 'center',
         justifyContent: 'center',
