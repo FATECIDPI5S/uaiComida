@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Picker } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
 //import firebase, { Firebase } from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -17,13 +17,38 @@ export default class Main extends Component {
 
     state = {
         ambiente: '',
+        mesas: [
+            { key: 'Mesa 01' },
+            { key: 'Mesa 02' },
+            { key: 'Mesa 03' },
+            { key: 'Mesa 04' },
+            { key: 'Mesa 05' },
+            { key: 'Mesa 06' },
+            { key: 'Mesa 07' },
+            { key: 'Mesa 08' },
+            { key: 'Mesa 09' },
+            { key: 'Mesa 10' },
+            { key: 'Mesa 11' },
+            { key: 'Mesa 12' },
+            { key: 'Mesa 13' },
+            { key: 'Mesa 14' },
+            { key: 'Mesa 15' },
+        ]
     }
+
+    renderItem = ({ item }) => (
+        <View style={styles.mesaContainer}>
+            <TouchableOpacity style={styles.mesa} onPress={() => { }}>
+                <Text style={styles.mesaText}>{item.key}</Text>
+            </TouchableOpacity>
+        </View>
+    )
 
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: '#FFF', }}>
 
-                <View style={styles.buttonContainer}>
+                <View style={styles.pickerContainer}>
                     <Picker
                         selectedValue={this.state.ambiente}
                         style={styles.picker}
@@ -37,41 +62,12 @@ export default class Main extends Component {
                     </Picker>
                 </View>
 
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 01</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 02</Text>
-                    </TouchableOpacity>
-                </View>
+                <FlatList
+                    numColumns={2} // Número de colunas
+                    data={this.state.mesas}
+                    renderItem={this.renderItem}
+                />
 
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 03</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 04</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 05</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 06</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 07</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Mesa 08</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
     };
@@ -82,21 +78,37 @@ export default class Main extends Component {
 }
 
 const styles = StyleSheet.create({
-    picker: {
-        height: 50,
-        width: '90%',
-        borderWidth: 1,
-        borderColor: '#ff3f34',
-        backgroundColor: '#ff3f34',
-        justifyContent: 'center',
-    },
-    buttonContainer: {
+    pickerContainer: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        margin: 50,
     },
-    button: {
+    picker: {
+        height: 50,
+        width: '100%',
+        borderWidth: 1,
+        borderColor: '#ff3f34',
+        color: '#FFF',
+        //borderRadius: 10,
+        backgroundColor: '#ff3f34',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    mesaContainer: {
+        //flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#FFF',
+        borderTopWidth: 1,
+        borderColor: '#DDD',
+        borderRadius: 5,
+        padding: 10,
+        //marginBottom: 20
+    },
+    mesa: {
         height: 75,
         width: 150,
         backgroundColor: '#ff3f34',
@@ -107,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
     },
-    buttonText: {
+    mesaText: {
         color: '#FFF',
         textAlign: 'center',
         fontSize: 16,
