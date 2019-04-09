@@ -64,16 +64,6 @@ export default class Login extends Component {
                 onPress={() => this.props.navigation.navigate('Main')}
               />
 
-              <Button
-                title="INSCREVA-SE"
-                containerStyle={{
-                  width: '85%',                  
-                }}
-                buttonStyle={styles.buttonContainer}
-                titleStyle={styles.buttonText}
-                onPress={() => this.props.navigation.navigate('SignUp')}
-              />
-
             </View>
 
           </View>
