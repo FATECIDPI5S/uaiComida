@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
 //import firebase, { Firebase } from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MesaService from '../service/MesaService';
 
 export default class Main extends Component {
 
@@ -18,31 +19,31 @@ export default class Main extends Component {
     state = {
         ambiente: '',
         mesas: [
-            { key: 'Mesa 01' },
-            { key: 'Mesa 02' },
-            { key: 'Mesa 03' },
-            { key: 'Mesa 04' },
-            { key: 'Mesa 05' },
-            { key: 'Mesa 06' },
-            { key: 'Mesa 07' },
-            { key: 'Mesa 08' },
-            { key: 'Mesa 09' },
-            { key: 'Mesa 10' },
-            { key: 'Mesa 11' },
-            { key: 'Mesa 12' },
-            { key: 'Mesa 13' },
-            { key: 'Mesa 14' },
-            { key: 'Mesa 15' },
+            { key: 'Mesa 01', pessoas: 5, valor: 225 },
+            { key: 'Mesa 02', pessoas: 7, valor: 350 },
+            { key: 'Mesa 03', pessoas: 3, valor: 145 },
         ]
     }
 
-    renderItem = ({ item }) => (
+    renderMesa = ({ item }) => ( // RENDERIZA CADA ELEMENTO DA FLATLIST
         <View style={styles.mesaContainer}>
             <TouchableOpacity style={styles.mesa} onPress={() => { }}>
-                <Text style={styles.mesaText}>{item.key}</Text>
+                <Text style={styles.mesaTitle}>{item.key}</Text>
+                <Text style={styles.mesaContent}>Pessoas: {item.pessoas}</Text>
+                <Text style={styles.mesaContent}>Valor: {item.valor}</Text>
             </TouchableOpacity>
         </View>
     )
+
+    componentWillMount() {
+        // MesaService.loadMesas(this.setState({ mesas }));
+        this.setState({ mesas: MesaService.loadMesas() });
+        console.log('Main', this.state.mesas) // PRINTA O RESULTADO DO GET
+    }
+
+    componentDidMount() {
+        console.log(this.state.mesas)
+    }
 
     render() {
         return (
@@ -66,8 +67,10 @@ export default class Main extends Component {
 
                 <FlatList
                     numColumns={2} // Número de colunas
-                    data={this.state.mesas}
-                    renderItem={this.renderItem}
+                    data={this.state.mesas} // AS MESAS QUE SÃO INICIADAS
+                    // MAS SÃO ATUALIZADAS (this.setState({})) NO COMPONENTWILLMOUNT()
+                    renderItem={this.renderMesa}
+
                 />
 
             </View>
@@ -132,9 +135,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
     },
-    mesaText: {
+    mesaTitle: {
         color: '#FFF',
         textAlign: 'center',
         fontSize: 16,
+        fontWeight: 'bold',
+    },
+    mesaContent: {
+        color: '#FFF',
+        textAlign: 'center',
+        fontSize: 12,
     },
 });
