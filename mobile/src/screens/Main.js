@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
-//import firebase, { Firebase } from 'react-native-firebase'
+import firebase, { Firebase } from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MesaService from '../service/MesaService';
+//import MesaService from '../service/MesaService';
 
 export default class Main extends Component {
 
@@ -22,13 +22,31 @@ export default class Main extends Component {
             { key: 'Mesa 01', pessoas: 5, valor: 225 },
             { key: 'Mesa 02', pessoas: 7, valor: 350 },
             { key: 'Mesa 03', pessoas: 3, valor: 145 },
-        ]
+        ],
+    }
+
+    async loadMesas() {
+        this.setState({ mesas: [] });
+        const loadedMesas = [];
+        const mesasRef = firebase.firestore().collection('mesas');
+        await mesasRef.orderBy('entrada', 'desc').get()
+            .then(
+                querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        loadedMesas.push(doc.data());
+                    })
+                })
+            .catch(err => {
+                console.log('Error getting documents => ', err);
+            });
+        this.setState({ mesas: loadedMesas });
+        console.log('MESAS DEPOIS', this.state.mesas);
     }
 
     renderMesa = ({ item }) => ( // RENDERIZA CADA ELEMENTO DA FLATLIST
         <View style={styles.mesaContainer}>
-            <TouchableOpacity style={styles.mesa} onPress={() => { }}>
-                <Text style={styles.mesaTitle}>{item.key}</Text>
+            <TouchableOpacity style={styles.mesa} key={item.mesa} onPress={() => { }}>
+                <Text style={styles.mesaTitle}>{item.mesa}</Text>
                 <Text style={styles.mesaContent}>Pessoas: {item.pessoas}</Text>
                 <Text style={styles.mesaContent}>Valor: {item.valor}</Text>
             </TouchableOpacity>
@@ -36,13 +54,7 @@ export default class Main extends Component {
     )
 
     componentWillMount() {
-        // MesaService.loadMesas(this.setState({ mesas }));
-        this.setState({ mesas: MesaService.loadMesas() });
-        console.log('Main', this.state.mesas) // PRINTA O RESULTADO DO GET
-    }
-
-    componentDidMount() {
-        console.log(this.state.mesas)
+        this.loadMesas();
     }
 
     render() {
@@ -70,7 +82,7 @@ export default class Main extends Component {
                     data={this.state.mesas} // AS MESAS QUE SÃO INICIADAS
                     // MAS SÃO ATUALIZADAS (this.setState({})) NO COMPONENTWILLMOUNT()
                     renderItem={this.renderMesa}
-
+                    keyExtractor={(item, index) => index.toString()} // PARA INSERIR UM KEY EM CADA COMPONENT ITEM
                 />
 
             </View>
@@ -88,7 +100,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 50,
+        marginVertical: 25,
     },
     picker: {
         height: 50,
