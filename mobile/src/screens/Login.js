@@ -1,74 +1,87 @@
-import React, {Component} from 'react';
-import {View, StyleSheet,  Image, Text, TextInput, TouchableOpacity} from 'react-native';
-import {Button, Input} from 'react-native-elements';
+import React, { Component } from 'react';
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Button, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {
-    render() {
-        return (
-          //<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-          //For apps:
-          //Place the attribution on the credits/description page of the application.
-          <View style={styles.container}>
+  render() {
+    return (
+      //<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+      //For apps:
+      //Place the attribution on the credits/description page of the application.
+      <View style={styles.container}>
 
-            <View style={styles.logoContainer}>
-              <Image
-                style={styles.logo}
-                source={require('../img/logo.png')}/>    
-              <Text style={styles.title}>uaiComida</Text>        
-            </View>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require('../img/logo.png')} />
+          <Text style={styles.title}>uaiComida</Text>
+        </View>
 
-            <View style={styles.formContainer}>
+        <View style={styles.formContainer}>
 
-              <View style={styles.inputContainer}>
-                <Icon
-                  style={styles.inputIcon}
-                  name='user'
-                  size={25}
-                />
-                <TextInput
-                  placeholder='Digite seu e-mail'
-                  keyboardType='email-address'
-                  placeholderTextColor='rgba(255, 255, 255, 0.6)'
-                  returnKeyType='next'
-                  onSubmitEditing={() => this.passwordInput.focus()}
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  style={styles.inputText}
-                />
-              </View>
-              
-              <View style={styles.inputContainer}>
-                <Icon
-                  style={styles.inputIcon}
-                  name='lock'
-                  size={25}
-                />
-                <TextInput
-                  placeholder='Digite sua senha'
-                  keyboardType='email-address'
-                  placeholderTextColor='rgba(255, 255, 255, 0.6)'
-                  returnKeyType='go'
-                  ref={(input) => this.passwordInput = input}
-                  style={styles.inputText}
-                />
-              </View>
-
-              <Button
-                title="ENTRAR"
-                containerStyle={{
-                  width: '85%',                  
-                }}
-                buttonStyle={styles.buttonContainer}
-                titleStyle={styles.buttonText}
-                onPress={() => this.props.navigation.navigate('Main')}
-              />
-
-            </View>
-
+          <View style={styles.inputContainer}>
+            <Icon
+              style={styles.inputIcon}
+              name='user'
+              size={25}
+            />
+            <TextInput
+              placeholder='Digite seu e-mail'
+              keyboardType='email-address'
+              placeholderTextColor='rgba(255, 255, 255, 0.6)'
+              returnKeyType='next'
+              onSubmitEditing={() => this.passwordInput.focus()}
+              autoCapitalize='none'
+              autoCorrect={false}
+              style={styles.inputText}
+            />
           </View>
-        );
-    }
+
+          <View style={styles.inputContainer}>
+            <Icon
+              style={styles.inputIcon}
+              name='lock'
+              size={25}
+            />
+            <TextInput
+              placeholder='Digite sua senha'
+              keyboardType='email-address'
+              placeholderTextColor='rgba(255, 255, 255, 0.6)'
+              returnKeyType='go'
+              ref={(input) => this.passwordInput = input}
+              style={styles.inputText}
+            />
+          </View>
+
+          {/* <Icon
+            style={{ alignSelf: 'center' }}
+            name='sign-in'
+            size={25}
+          /> */}
+          <Button
+            title="ENTRAR"
+            containerStyle={{
+              width: '85%',
+            }}
+            icon={{
+              type: "font-awesome",
+              name: "sign-in",
+              size: 30,
+              color: "white",
+              opacity: 0.6,
+              marginRight: 5,
+            }}
+            buttonStyle={styles.buttonContainer}
+            titleStyle={styles.buttonText}
+            onPress={() => this.props.navigation.navigate('Main')}
+          />
+
+        </View>
+
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -84,7 +97,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 26,
-    marginTop: 5,    
+    marginTop: 5,
     textAlign: 'center',
     opacity: 0.8,
   },
@@ -118,7 +131,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: '#c0392b',
-    height: 40,
+    height: 60,
     marginTop: 10,
     borderRadius: 30,
   },
