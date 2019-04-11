@@ -29,7 +29,7 @@ export default class Main extends Component {
         this.setState({ mesas: [] });
         const loadedMesas = [];
         const mesasRef = firebase.firestore().collection('mesas');
-        await mesasRef.orderBy('entrada', 'desc').get()
+        await mesasRef.where('ativa', '==', true).orderBy('entrada', 'desc').get()
             .then(
                 querySnapshot => {
                     querySnapshot.forEach(doc => {
@@ -40,15 +40,26 @@ export default class Main extends Component {
                 console.log('Error getting documents => ', err);
             });
         this.setState({ mesas: loadedMesas });
-        console.log('MESAS DEPOIS', this.state.mesas);
     }
 
     renderMesa = ({ item }) => ( // RENDERIZA CADA ELEMENTO DA FLATLIST
         <View style={styles.mesaContainer}>
-            <TouchableOpacity style={styles.mesa} key={item.mesa} onPress={() => { }}>
-                <Text style={styles.mesaTitle}>{item.mesa}</Text>
-                <Text style={styles.mesaContent}>Pessoas: {item.pessoas}</Text>
-                <Text style={styles.mesaContent}>Valor: {item.valor}</Text>
+            <TouchableOpacity style={styles.mesa} key={item.mesa} onPress={() => this.props.navigation.navigate('Table', { title: item.mesa, table: item })}>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.mesaTitle}>{item.mesa}</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Icon style={styles.mesaIcon} name="group" color="#ff3f34" size={15} />
+                    <Text style={styles.mesaContent}>Pessoas: {item.pessoas}</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Icon style={styles.mesaIcon} name="money" color="#ff3f34" size={15} />
+                    <Text style={styles.mesaContent}>Valor: {item.valor}</Text>
+                </View>
+
             </TouchableOpacity>
         </View>
     )
@@ -59,7 +70,7 @@ export default class Main extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#FFF', }}>
+            <View style={{ flex: 1 }}>
 
                 <View style={styles.pickerContainer}>
                     <Picker
@@ -96,15 +107,14 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
     pickerContainer: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 25,
+        marginVertical: 20,
     },
     picker: {
         height: 50,
-        width: '92%',
+        width: '94%',
         borderWidth: 1,
         borderColor: '#ff3f34',
         color: '#FFF',
@@ -128,34 +138,43 @@ const styles = StyleSheet.create({
         //flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
+        flex: 1,
         justifyContent: 'center',
         backgroundColor: '#FFF',
-        borderTopWidth: 1,
-        borderColor: '#DDD',
+        //borderTopWidth: 1,
+        //borderColor: '#DDD',
         borderRadius: 5,
-        padding: 10,
         //marginBottom: 20
     },
     mesa: {
         height: 75,
-        width: 150,
+        width: 160,
         backgroundColor: '#ff3f34',
         borderColor: '#AAA',
         borderWidth: 1,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 5,
+    },
+    mesaIcon: {
+        color: '#FFF',
+        alignSelf: 'center',
     },
     mesaTitle: {
         color: '#FFF',
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
+        borderBottomWidth: 1,
+        borderColor: '#CCC',
+        width: '100%',
+        marginBottom: 2,
     },
     mesaContent: {
         color: '#FFF',
         textAlign: 'center',
         fontSize: 12,
+        marginLeft: 5,
+        marginVertical: 2.5,
     },
 });
