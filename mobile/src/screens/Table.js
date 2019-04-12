@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
-//import firebase, { Firebase } from 'react-native-firebase'
+import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
-import { TextInput } from 'react-native-gesture-handler';
+//import firebase, { Firebase } from 'react-native-firebase'
 //import { KeyboardAvoidingView } from 'react-native';
 
 
@@ -54,7 +53,8 @@ export default class Table extends Component {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button}
+                        onPress={() => this.props.navigation.navigate('AddItem', { title: `Adicionar itens a ${this.props.navigation.state.params.table.mesa.toLowerCase()}`, table: this.props.navigation.state.params.table })}>
                         <Icon style={styles.buttonIcon} name="cart-plus" color="#ff3f34" size={20} />
                         <Text style={styles.buttonText}>Adicionar item</Text>
                     </TouchableOpacity>

@@ -18,11 +18,7 @@ export default class Main extends Component {
 
     state = {
         ambiente: '',
-        mesas: [
-            { key: 'Mesa 01', pessoas: 5, valor: 225 },
-            { key: 'Mesa 02', pessoas: 7, valor: 350 },
-            { key: 'Mesa 03', pessoas: 3, valor: 145 },
-        ],
+        mesas: [],
     }
 
     async loadMesas() {
@@ -110,7 +106,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 20,
+        marginTop: 20,
+        marginBottom: 10,
     },
     picker: {
         height: 50,
@@ -153,7 +150,8 @@ const styles = StyleSheet.create({
         borderColor: '#AAA',
         borderWidth: 1,
         borderRadius: 10,
-        justifyContent: 'center',
+        marginTop: 10,
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     mesaIcon: {
@@ -166,7 +164,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         borderBottomWidth: 1,
-        borderColor: '#CCC',
+        borderColor: '#AAA',
         width: '100%',
         marginBottom: 2,
     },
