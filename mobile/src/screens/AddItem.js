@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { StyleSheet, View, Text, TouchableOpacity, TouchableHighlight, Picker, FlatList, Alert, Modal } from 'react-native';
+import { SearchBar, Overlay } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
 
@@ -16,7 +16,10 @@ export default class AddItem extends Component {
             { nome: 'Hambúrguer', valor: 12.99 },
             { nome: 'Suco', valor: 4.75 },
             { nome: 'Batata frita', valor: 2.5 },
-        ]
+        ],
+        modalVisible: false,
+        selectedItem: '',
+        itemQuantity: 0,
     };
 
     updateSearch = search => {
@@ -25,7 +28,7 @@ export default class AddItem extends Component {
 
     renderItem = ({ item }) => ( // RENDERIZA CADA ELEMENTO DA FLATLIST
         <View style={styles.itemContainer}>
-            <TouchableOpacity style={styles.item} key={item.nome} onPress={() => { }}>
+            <TouchableOpacity style={styles.item} key={item.nome} onPress={() => this.setState({ modalVisible: true, selectedItem: item })}>
 
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.itemTitle}>{item.nome}</Text>
@@ -64,7 +67,58 @@ export default class AddItem extends Component {
                         keyExtractor={(item, index) => index.toString()} // PARA INSERIR UM KEY EM CADA COMPONENT ITEM
                     />
                 </View>
-            </View>
+
+                <Overlay
+                    isVisible={this.state.modalVisible}
+                    windowBackgroundColor="rgba(0, 0, 0, .5)"
+                    overlayBackgroundColor="white"
+                    width={300}
+                    height={325}
+                    onBackdropPress={() => this.setState({ modalVisible: false })}
+                    borderRadius={10}
+                >
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+
+                        <Text style={{ fontSize: 18 }}>Adicionar {this.state.selectedItem.nome} a {this.props.navigation.state.params.table.mesa}</Text>
+
+                        <View style={{ alignItems: 'center', alignSelf: 'center', justifyContent: 'center', flex: 1 }}>
+
+                            <Text style={{ fontSize: 16, marginBottom: 10, marginTop: 10 }}>Quantidade</Text>
+
+                            <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity onPress={() => { if (this.state.itemQuantity > 0) { this.setState({ itemQuantity: this.state.itemQuantity - 1 }) } }}>
+                                    <Icon name="minus-circle" color="#ff3f34" size={40} />
+                                </TouchableOpacity>
+                                <Text style={{ fontSize: 24, marginHorizontal: 30 }}>{this.state.itemQuantity}</Text>
+                                <TouchableOpacity onPress={() => this.setState({ itemQuantity: this.state.itemQuantity + 1 })}>
+                                    <Icon name="plus-circle" color="#ff3f34" size={40} />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={{ marginTop: 10, borderWidth: 1, borderColor: '#CCC', borderRadius: 10, height: 115, width: 270 }}></View>
+
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={{
+                                    borderWidth: 1,
+                                    borderColor: '#CCC',
+                                    height: 50,
+                                    borderRadius: 10,
+                                    width: 270,
+                                    backgroundColor: '#ff3f34',
+                                    alignSelf: 'center',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                    <Text style={{ fontSize: 20, color: '#FFF' }}>OK</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+                    </View>
+
+                </Overlay>
+
+            </View >
         );
     }
 }
@@ -144,5 +198,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginLeft: 5,
         marginTop: 10,
+    },
+    buttonContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        // marginBottom: 20,
     },
 });
