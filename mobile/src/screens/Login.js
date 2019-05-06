@@ -96,11 +96,6 @@ export default class Login extends Component {
 
           {this.state.errorMessage && <Text style={{ color: 'white' }}>{this.state.errorMessage}</Text>}
 
-          {/* <Icon
-            style={{ alignSelf: 'center' }}
-            name='sign-in'
-            size={25}
-          /> */}
           <Button
             title="ENTRAR"
             containerStyle={{
