@@ -1,9 +1,45 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { View, StyleSheet, Image, Text, TextInput } from 'react-native';
+import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import firebase from 'react-native-firebase'
 
 export default class Login extends Component {
+
+  componentWillMount() {
+    firebase
+      .auth()
+      .onAuthStateChanged(user => {this.props.navigation.navigate(user ? 'Main' : 'Login')})
+  }
+
+  state = {
+    email: 'teste@teste.com',
+    password: 'teste1',
+    errorMessage: null,
+    handleLogin: false,
+  }
+  
+  handleLogin = () => {
+    this.setState({handleLogin: true})
+    const { email, password } = this.state
+
+    if(email == '' || password == '' || email == null || password == null){
+      this.setState({ errorMessage: 'Por favor, preencha todos os campos' })
+      return
+    }
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(
+        () => {
+          this.props.navigation.navigate('Main')
+          this.setState({ handleLogin: false })
+        }
+      )
+      .catch(error => this.setState({ errorMessage: error.message, handleLogin: false }))
+  }
+
   render() {
     return (
       //<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
@@ -35,6 +71,8 @@ export default class Login extends Component {
               autoCapitalize='none'
               autoCorrect={false}
               style={styles.inputText}
+              onChangeText={email => this.setState({ email })}
+              value={this.state.email}
             />
           </View>
 
@@ -46,13 +84,17 @@ export default class Login extends Component {
             />
             <TextInput
               placeholder='Digite sua senha'
-              keyboardType='email-address'
               placeholderTextColor='rgba(255, 255, 255, 0.6)'
               returnKeyType='go'
               ref={(input) => this.passwordInput = input}
               style={styles.inputText}
+              secureTextEntry={true}              
+              onChangeText={password => this.setState({ password })}
+              value={this.state.password}
             />
           </View>
+
+          {this.state.errorMessage && <Text style={{ color: 'white' }}>{this.state.errorMessage}</Text>}
 
           {/* <Icon
             style={{ alignSelf: 'center' }}
@@ -74,7 +116,8 @@ export default class Login extends Component {
             }}
             buttonStyle={styles.buttonContainer}
             titleStyle={styles.buttonText}
-            onPress={() => this.props.navigation.navigate('Main')}
+            loading={this.state.handleLogin}
+            onPress={this.handleLogin}
           />
 
         </View>
