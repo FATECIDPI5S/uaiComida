@@ -7,9 +7,9 @@ import firebase from 'react-native-firebase'
 export default class Login extends Component {
 
   componentWillMount() {
-    firebase
-      .auth()
-      .onAuthStateChanged(user => {this.props.navigation.navigate(user ? 'Main' : 'Login')})
+    if(firebase.auth().currentUser){
+      this.props.navigation.navigate('Main')
+    }
   }
 
   state = {
@@ -33,8 +33,8 @@ export default class Login extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(
         () => {
-          this.props.navigation.navigate('Main')
           this.setState({ handleLogin: false })
+          this.props.navigation.navigate('Main')          
         }
       )
       .catch(error => this.setState({ errorMessage: error.message, handleLogin: false }))

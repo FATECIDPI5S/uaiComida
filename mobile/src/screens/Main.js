@@ -1,20 +1,55 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
-import firebase, { Firebase } from 'react-native-firebase'
+import { Platform, StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
+import firebase from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
-//import MesaService from '../service/MesaService';
+import { Header } from 'react-native-elements';
 
 export default class Main extends Component {
 
-    // signOutUser = async () => {
-    //     try {
-    //         await firebase.auth().signOut().then(
-    //             console.log('SAIU E ENCERROU')
-    //         );
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
+    static navigationOptions = ({navigation}) => ({
+        header:
+            <Header
+                placement='center'
+                leftComponent={
+                    <TouchableOpacity>
+                        <Icon
+                            name='navicon'
+                            size={25}
+                            color='white'
+                        />
+                    </TouchableOpacity>
+                }
+                centerComponent={{
+                    text: 'Mesas',
+                    style: {
+                        fontSize:24,
+                        color: '#fff',
+                    }
+                }}
+                rightComponent={
+                    <TouchableOpacity
+                        onPress={async () => {
+                            try{
+                                await firebase.auth().signOut()
+                                navigation.navigate('Login')
+                            }catch(error){
+                                console.log(error)
+                            }           
+                        }}
+                    >
+                        <Icon
+                            name='sign-out'
+                            size={25}
+                            color='white'
+                        />
+                    </TouchableOpacity>
+                }
+                containerStyle={{
+                    backgroundColor: '#ff3f34',
+                    //height: (Platform.OS === 'ios' ? 44 : 56),                    
+                }}                
+            />
+    })
 
     state = {
         ambiente: '',
@@ -95,10 +130,6 @@ export default class Main extends Component {
             </View>
         );
     };
-
-    componentWillUnmount() {
-        //this.signOutUser();
-    }
 }
 
 const styles = StyleSheet.create({
