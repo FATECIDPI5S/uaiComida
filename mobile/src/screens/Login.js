@@ -8,7 +8,7 @@ export default class Login extends Component {
 
   componentWillMount() {
     if(firebase.auth().currentUser){
-      this.props.navigation.navigate('Main')
+      this.props.navigation.navigate('TableList')
     }
   }
 
@@ -34,7 +34,7 @@ export default class Login extends Component {
       .then(
         () => {
           this.setState({ handleLogin: false })
-          this.props.navigation.navigate('Main')          
+          this.props.navigation.navigate('TableList')          
         }
       )
       .catch(error => this.setState({ errorMessage: error.message, handleLogin: false }))
