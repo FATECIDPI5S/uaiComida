@@ -1,55 +1,33 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
 import firebase from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Header } from 'react-native-elements';
 
 export default class Main extends Component {
 
     static navigationOptions = ({navigation}) => ({
-        header:
-            <Header
-                placement='center'
-                leftComponent={
-                    <TouchableOpacity>
-                        <Icon
-                            name='navicon'
-                            size={25}
-                            color='white'
-                        />
-                    </TouchableOpacity>
-                }
-                centerComponent={{
-                    text: 'Mesas',
-                    style: {
-                        fontSize:24,
-                        color: '#fff',
+        title: 'Mesas',
+        headerRight:(
+            <TouchableOpacity
+                onPress={
+                    async () => {
+                        try{
+                            await firebase.auth().signOut()
+                            navigation.navigate('Login')
+                        }catch(error){
+                            console.log(error)
+                        }           
                     }
-                }}
-                rightComponent={
-                    <TouchableOpacity
-                        onPress={async () => {
-                            try{
-                                await firebase.auth().signOut()
-                                navigation.navigate('Login')
-                            }catch(error){
-                                console.log(error)
-                            }           
-                        }}
-                    >
-                        <Icon
-                            name='sign-out'
-                            size={25}
-                            color='white'
-                        />
-                    </TouchableOpacity>
                 }
-                containerStyle={{
-                    backgroundColor: '#ff3f34',
-                    //height: (Platform.OS === 'ios' ? 44 : 56),                    
-                }}                
-            />
-    })
+                style={{marginRight:10}}
+            >
+                <Icon
+                    name='sign-out'
+                    size={30}
+                    color='white'
+                />
+            </TouchableOpacity>
+    )})
 
     state = {
         ambiente: '',
