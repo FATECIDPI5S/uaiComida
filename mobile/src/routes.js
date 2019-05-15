@@ -1,16 +1,22 @@
-import { createSwitchNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 import LoginScreen from './screens/Login'
 import MainScreen from './screens/Main'
 import TableScreen from './screens/Table'
 import AddItemScreen from './screens/AddItem'
 
-const AppStack = createStackNavigator({
+const AuthStack = createStackNavigator({
+    Login: {
+        screen: LoginScreen,
+        navigationOptions: {
+            header: null
+        },
+    },
+});
+
+const TableStack = createStackNavigator({
     Main: {
         screen: MainScreen,
-        navigationOptions: {
-            title: 'Mesas',
-        },
     },
     Table: {
         screen: TableScreen,
@@ -28,13 +34,8 @@ const AppStack = createStackNavigator({
     }
 });
 
-const AuthStack = createStackNavigator({
-    Login: {
-        screen: LoginScreen,
-        navigationOptions: {
-            header: null
-        },
-    },
+const AppStack = createBottomTabNavigator({
+    Table: TableStack,
 });
 
 export default createAppContainer(
