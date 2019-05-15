@@ -3,10 +3,9 @@ import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'reac
 import firebase from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class Main extends Component {
+export default class TableList extends Component {
 
     static navigationOptions = ({navigation}) => ({
-        title: 'Mesas',
         headerRight:(
             <TouchableOpacity
                 onPress={
