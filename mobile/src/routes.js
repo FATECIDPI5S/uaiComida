@@ -21,6 +21,9 @@ const AuthStack = createStackNavigator({
 const TableStack = createStackNavigator({
     TableList: {
         screen: TableListScreen,
+        navigationOptions:{
+            header: null,
+        }
     },
     Table: {
         screen: TableScreen,
@@ -69,6 +72,9 @@ const KitchenStack = createStackNavigator({
 const ConfigStack = createStackNavigator({
     Config: {
         screen: ConfigScreen,
+        navigationOptions: {
+            header: null
+        },
     },
 },{
     defaultNavigationOptions: {
@@ -121,6 +127,6 @@ const AppStack = createBottomTabNavigator(
 export default createAppContainer(
     createSwitchNavigator({
         Auth: AuthStack,
-        App: AppStack,        
+        App: AppStack,
     },
 ));
