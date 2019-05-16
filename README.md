@@ -1,5 +1,5 @@
 # uaiComida
-Projeto interdisciplinar da Faculdade de ecnologia de Indaiatuba
+Projeto interdisciplinar da Faculdade de Tecnologia de Indaiatuba.
 
 
-FAZER PULL REQUEST ANTES DE PUSH DE COMMITS
+# FAZER PULL REQUEST ANTES DE PUSH DE COMMITS!
