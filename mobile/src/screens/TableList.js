@@ -5,29 +5,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class TableList extends Component {
 
-    static navigationOptions = ({navigation}) => ({
-        headerRight:(
-            <TouchableOpacity
-                onPress={
-                    async () => {
-                        try{
-                            await firebase.auth().signOut()
-                            navigation.navigate('Login')
-                        }catch(error){
-                            console.log(error)
-                        }           
-                    }
-                }
-                style={{marginRight:10}}
-            >
-                <Icon
-                    name='sign-out'
-                    size={30}
-                    color='white'
-                />
-            </TouchableOpacity>
-    )})
-
     state = {
         ambiente: '',
         mesas: [],
@@ -114,19 +91,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 10,
     },
     picker: {
         height: 50,
-        width: '94%',
+        width: '90%',
         borderWidth: 1,
         borderColor: '#ff3f34',
-        color: '#FFF',
-        borderRadius: 999,
-        backgroundColor: '#ff3f34',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     pickerItem: {
         height: 50,
