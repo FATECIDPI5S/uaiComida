@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import Routes from './routes';
-import * as firebase from 'firebase';
+import React from "react";
+import Routes from "./routes";
+import { Provider } from "react-redux";
+import store from "./store";
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import './styles.css';
+import * as firebase from "firebase";
+
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import "./styles.css";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,21 +24,22 @@ firebase.initializeApp(firebaseConfig);
 const customTheme = createMuiTheme({
     palette: {
         primary: {
-            main: '#b71c1c',
+            main: "#b71c1c"
         },
         secondary: {
-            main: '#c62828',
-        },
+            main: "#c62828"
+        }
     }
 });
 
-const App = () =>
-    (
-        <div className="App">
-            <MuiThemeProvider theme={customTheme}>
+const App = () => (
+    <div className="App">
+        <MuiThemeProvider theme={customTheme}>
+            <Provider store={store}>
                 <Routes />
-            </MuiThemeProvider>
-        </div>
-    )
+            </Provider>
+        </MuiThemeProvider>
+    </div>
+);
 
 export default App;

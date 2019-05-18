@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import logo from '../images/logo.png';
 
+// import { connect } from 'react-redux';
+
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -44,43 +46,46 @@ const styles = theme => ({
     },
 });
 
-function Login(props) {
-    const { classes } = props;
+class Login extends React.Component {
 
-    return (
-        <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-                <img src={logo} alt="uaiComida" />
-                <Typography component="h1" variant="h5">
-                    uaiComida
-                </Typography>
-                <form className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">E-mail</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Senha</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Lembrar-me"
-                    />
-                    <Button
-                        fullWidth
-                        type="button"
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Acessar
-                    </Button>
-                </form>
-            </Paper>
-        </main>
-    );
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <main className={classes.main}>
+                <CssBaseline />
+                <Paper className={classes.paper}>
+                    <img src={logo} alt="uaiComida" />
+                    <Typography component="h1" variant="h5">
+                        uaiComida
+                    </Typography>
+                    <form className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="email">E-mail</InputLabel>
+                            <Input id="email" name="email" autoComplete="email" autoFocus />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Senha</InputLabel>
+                            <Input name="password" type="password" id="password" autoComplete="current-password" />
+                        </FormControl>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Lembrar-me"
+                        />
+                        <Button
+                            fullWidth
+                            type="button"
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Acessar
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
+        );
+    }
 }
 
 Login.propTypes = {
