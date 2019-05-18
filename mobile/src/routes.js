@@ -1,22 +1,29 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-
+import React from 'react'
+import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import LoginScreen from './screens/Login'
-import MainScreen from './screens/Main'
+import TableListScreen from './screens/TableList'
 import TableScreen from './screens/Table'
 import AddItemScreen from './screens/AddItem'
+import ProductListScreen from './screens/ProductList'
+import KitchenListScreen from './screens/KitchenList'
+import ConfigScreen from './screens/Config'
 
-const MainNavigator = createStackNavigator({
+const AuthStack = createStackNavigator({
     Login: {
         screen: LoginScreen,
         navigationOptions: {
             header: null
         },
     },
-    Main: {
-        screen: MainScreen,
-        navigationOptions: {
-            title: 'Mesas',
-        },
+});
+
+const TableStack = createStackNavigator({
+    TableList: {
+        screen: TableListScreen,
+        navigationOptions:{
+            header: null,
+        }
     },
     Table: {
         screen: TableScreen,
@@ -24,16 +31,105 @@ const MainNavigator = createStackNavigator({
     AddItem: {
         screen: AddItemScreen,
     }
-}, {
-        defaultNavigationOptions: {
-            headerStyle: {
-                color: '#FFF',
-                backgroundColor: '#ff3f34',
-            },
-            headerTintColor: '#FFF',
+},{
+    defaultNavigationOptions: {
+        headerStyle: {
+            color: '#FFF',
+            backgroundColor: '#ff3f34',
+        },
+        headerTintColor: '#FFF',
+    }
+});
+
+const MenuStack = createStackNavigator({
+    ProductList: {
+        screen: ProductListScreen,
+        navigationOptions:{
+            header: null,
         }
-    });
+    },
+},{
+    defaultNavigationOptions: {
+        headerStyle: {
+            color: '#FFF',
+            backgroundColor: '#ff3f34',
+        },
+        headerTintColor: '#FFF',
+    }
+});
 
-const App = createAppContainer(MainNavigator);
+const KitchenStack = createStackNavigator({
+    KitchenList: {
+        screen: KitchenListScreen,
+    },
+},{
+    defaultNavigationOptions: {
+        headerStyle: {
+            color: '#FFF',
+            backgroundColor: '#ff3f34',
+        },
+        headerTintColor: '#FFF',
+    }
+});
 
-export default App;
+const ConfigStack = createStackNavigator({
+    Config: {
+        screen: ConfigScreen,
+        navigationOptions: {
+            header: null
+        },
+    },
+},{
+    defaultNavigationOptions: {
+        headerStyle: {
+            color: '#FFF',
+            backgroundColor: '#ff3f34',
+        },
+        headerTintColor: '#FFF',
+    }
+});
+
+const AppStack = createBottomTabNavigator(
+{
+    Mesas: TableStack,
+    Menu: MenuStack,
+    Cozinha: KitchenStack,
+    Configuração: ConfigStack,
+},
+{
+    defaultNavigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ focused, tintColor }) => {
+            const { routeName } = navigation.state;
+            let iconName;
+            switch(routeName) {
+                case 'Mesas':
+                    iconName = `room-service${focused ? '' : '-outline'}`;
+                break;
+                case 'Menu':
+                    iconName = `file-document-box${focused ? '' : '-outline'}`;
+                break;
+                case 'Cozinha':
+                    iconName = `tea${focused ? '' : '-outline'}`;
+                break;
+                case 'Configuração':
+                    iconName = `settings${focused ? '' : '-outline'}`;
+                break;
+            }
+            return <IconMCI name={iconName} size={25} color={tintColor} />;
+        },
+    }),
+    tabBarOptions: {
+        activeTintColor: '#ff3f34',
+        inactiveTintColor: '#515151',
+        labelStyle: {
+            fontSize: 12,
+        }
+    }
+});
+
+export default createAppContainer(
+    createSwitchNavigator({
+        Auth: AuthStack,
+        App: AppStack,
+    },
+));

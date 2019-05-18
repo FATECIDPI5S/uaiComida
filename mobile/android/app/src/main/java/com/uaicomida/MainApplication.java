@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
             new MainReactPackage(),
             new RNFirebasePackage(),
             new RNFirebaseFirestorePackage(),
+            new RNFirebaseAuthPackage(),
             new RNGestureHandlerPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage()

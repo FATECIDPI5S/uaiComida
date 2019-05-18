@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Picker, FlatList } from 'react-native';
-import firebase, { Firebase } from 'react-native-firebase'
+import firebase from 'react-native-firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
-//import MesaService from '../service/MesaService';
 
-export default class Main extends Component {
-
-    // signOutUser = async () => {
-    //     try {
-    //         await firebase.auth().signOut().then(
-    //             console.log('SAIU E ENCERROU')
-    //         );
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
+export default class TableList extends Component {
 
     state = {
         ambiente: '',
@@ -66,23 +55,39 @@ export default class Main extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
 
                 <View style={styles.pickerContainer}>
+                    <Text styles={styles.pickerContainerTitle}>
+                        Selecione o ambiente
+                    </Text>
                     <Picker
-                        mode={'dialog'}
                         selectedValue={this.state.ambiente}
                         style={styles.picker}
-                        itemStyle={styles.pickerItem}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({ ambiente: itemValue })
                         }>
-                        <Picker.Item label="Selecione o ambiente" value="0" />
                         <Picker.Item label="Entrada" value="1" />
                         <Picker.Item label="Piso superior" value="2" />
                         <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
+                        <Picker.Item label="Externo" value="3" />
                     </Picker>
                 </View>
+                
 
                 <FlatList
                     numColumns={2} // Número de colunas
@@ -95,30 +100,22 @@ export default class Main extends Component {
             </View>
         );
     };
-
-    componentWillUnmount() {
-        //this.signOutUser();
-    }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     pickerContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 10,
+        height: 60,
+        backgroundColor: '#ff3f34',
+    },
+    pickerContainerTitle: {
+        fontSize:3,
+        color: '#FFF',
     },
     picker: {
         height: 50,
-        width: '94%',
-        borderWidth: 1,
-        borderColor: '#ff3f34',
-        color: '#FFF',
-        borderRadius: 999,
-        backgroundColor: '#ff3f34',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     pickerItem: {
         height: 50,
@@ -132,16 +129,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     mesaContainer: {
-        //flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '#FFF',
-        //borderTopWidth: 1,
-        //borderColor: '#DDD',
         borderRadius: 5,
-        //marginBottom: 20
     },
     mesa: {
         height: 75,
