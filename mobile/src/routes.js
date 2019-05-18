@@ -41,9 +41,12 @@ const TableStack = createStackNavigator({
     }
 });
 
-const ProductStack = createStackNavigator({
+const MenuStack = createStackNavigator({
     ProductList: {
         screen: ProductListScreen,
+        navigationOptions:{
+            header: null,
+        }
     },
 },{
     defaultNavigationOptions: {
@@ -89,7 +92,7 @@ const ConfigStack = createStackNavigator({
 const AppStack = createBottomTabNavigator(
 {
     Mesas: TableStack,
-    Produtos: ProductStack,
+    Menu: MenuStack,
     Cozinha: KitchenStack,
     Configuração: ConfigStack,
 },
@@ -102,7 +105,7 @@ const AppStack = createBottomTabNavigator(
                 case 'Mesas':
                     iconName = `room-service${focused ? '' : '-outline'}`;
                 break;
-                case 'Produtos':
+                case 'Menu':
                     iconName = `file-document-box${focused ? '' : '-outline'}`;
                 break;
                 case 'Cozinha':
