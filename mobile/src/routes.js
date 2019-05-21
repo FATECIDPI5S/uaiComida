@@ -61,6 +61,9 @@ const MenuStack = createStackNavigator({
 const KitchenStack = createStackNavigator({
     KitchenList: {
         screen: KitchenListScreen,
+        navigationOptions:{
+            header: null,
+        }
     },
 },{
     defaultNavigationOptions: {
