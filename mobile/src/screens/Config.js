@@ -8,9 +8,72 @@ import color from '../styles/Colors'
 export default class Config extends Component {
 
     state = {
-        usuario:'',
-        empresa:'',
+        apelido:'',
+        email:'',
+        empresaUid:'',
+        nomeFantasia:'',        
+        logoUri:'https://fundacaofat.org.br/wp-content/uploads/2019/03/logo-centropaulasouza-corfatec2.png'
     };
+
+    async getUserData(){        
+        const userUID = firebase.auth().currentUser.uid
+        
+        await firebase
+                .firestore()
+                .collection("funcionario")
+                .doc(userUID)
+                .get()
+                .then(doc => {
+                    if (doc.exists) {
+                        this.setState({ apelido: doc.get('apelido') })
+                        this.setState({ email: doc.get('email') })
+                    } else {
+                        console.log("funcionario: No such document!");
+                    }
+                })
+                .catch(function(error) { 
+                    console.log(error);
+                })
+
+        await firebase
+                .firestore()
+                .collection("empresaFuncionarios")
+                .where(userUID, "==", true)
+                .get()
+                .then(query => {
+                    const doc = query.docs[0]
+                    if (doc.exists) {
+                        this.setState({ empresaUid: doc.id })
+                    } else {
+                        console.log("empresaFuncionarios: No such document!");
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);  
+                })
+
+        await firebase
+                .firestore()
+                .collection("empresa")
+                .doc(this.state.empresaUid)
+                .get()
+                .then(doc => {
+                    console.log(doc)
+                    if (doc.exists) {
+                        this.setState({ logoUri: doc.get('logoURL') })
+                        this.setState({ nomeFantasia: doc.get('nomeFantasia') })
+                    } else {
+                        console.log("funcionario: No such document!");
+                    }
+                })
+                .catch(function(error) { 
+                    console.log(error);
+                })    
+    }
+
+    componentWillMount() {
+        this.getUserData()            
+    }
       
     render () {
         return (
@@ -22,18 +85,17 @@ export default class Config extends Component {
                             <Avatar
                                 rounded
                                 source={{
-                                    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMUHDHBW8FJhcKyTNF1uKDYMWmuMf85cyw0cdJw3-Heu1SfWjJ',
+                                    uri: this.state.logoUri,
                                 }}
                                 size={130}
                             />
                         </View>
                         <View style={styles.containerInfoText}>
                             <Text numberOfLines={1} style={styles.text}>Empresa:</Text>
-                            <Text numberOfLines={1} style={styles.text}>Os DAORAasdasdasdasdasdasdasdasdasdadsasdadsa</Text>
+                            <Text numberOfLines={1} style={styles.text}>{this.state.nomeFantasia}</Text>
                             <Text numberOfLines={1} style={styles.text}>Usuário:</Text>
-                            <Text numberOfLines={1} style={styles.text}>João Santosssssssssssssssssssssssssssssssssssssss</Text>
+                            <Text numberOfLines={1} style={styles.text}>{this.state.apelido}</Text>
                         </View>
-
                         
                     </View>
 
@@ -41,7 +103,7 @@ export default class Config extends Component {
 
                     <View style={{flex:1,paddingLeft:20,paddingRight:20,alignItems:'center',justifyContent:'center',}}>
                         
-                        <Text numberOfLines={1} style={styles.text}>joaozinho@teste.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</Text>
+                        <Text numberOfLines={1} style={styles.text}>{this.state.email}</Text>
 
                     </View>
 
