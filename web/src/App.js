@@ -1,7 +1,7 @@
 import React from "react";
 import Routes from "./routes";
 import { Provider } from "react-redux";
-import store from "./store";
+import configureStore from "./store";
 
 import * as firebase from "firebase";
 
@@ -32,14 +32,16 @@ const customTheme = createMuiTheme({
     }
 });
 
+const store = configureStore({})
+
 const App = () => (
-    <div className="App">
-        <MuiThemeProvider theme={customTheme}>
-            <Provider store={store}>
-                <Routes />
-            </Provider>
-        </MuiThemeProvider>
-    </div>
+    // <div className="App">
+    // <MuiThemeProvider theme={customTheme}>
+    <Provider store={store}>
+        <Routes />
+    </Provider>
+    //</MuiThemeProvider>
+    // </div>
 );
 
 export default App;
