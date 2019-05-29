@@ -10,21 +10,24 @@ export default class TableList extends Component {
         mesas: [],
     }
 
-    async loadMesas() {
-        this.setState({ mesas: [] });
-        const loadedMesas = [];
+    loadMesas() {
         const mesasRef = firebase.firestore().collection('mesas');
-        await mesasRef.where('ativa', '==', true).orderBy('entrada', 'desc').get()
-            .then(
+        mesasRef
+            .where('ativa', '==', true)
+            .orderBy('entrada', 'desc')
+            .onSnapshot(
                 querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        loadedMesas.push(doc.data());
-                    })
-                })
-            .catch(err => {
-                console.log('Error getting documents => ', err);
-            });
-        this.setState({ mesas: loadedMesas });
+                    const loadedMesas = [];
+                    querySnapshot
+                        .forEach(
+                            doc => {
+                                loadedMesas.push(doc.data());
+                            }
+                        )
+                    this.setState({ mesas: [] });
+                    this.setState({ mesas: loadedMesas });
+
+                }, error => { console.log(error) })  
     }
 
     renderMesa = ({ item }) => ( // RENDERIZA CADA ELEMENTO DA FLATLIST
@@ -32,7 +35,7 @@ export default class TableList extends Component {
             <TouchableOpacity style={styles.mesa} key={item.mesa} onPress={() => this.props.navigation.navigate('Table', { title: item.mesa, table: item })}>
 
                 <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.mesaTitle}>{item.mesa}</Text>
+                    <Text numberOfLines={1} style={styles.mesaTitle}>{item.mesa}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
@@ -87,7 +90,7 @@ export default class TableList extends Component {
                         <Picker.Item label="Externo" value="3" />
                     </Picker>
                 </View>
-                
+
 
                 <FlatList
                     numColumns={2} // Número de colunas
@@ -111,7 +114,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff3f34',
     },
     pickerContainerTitle: {
-        fontSize:3,
+        fontSize: 3,
         color: '#FFF',
     },
     picker: {
