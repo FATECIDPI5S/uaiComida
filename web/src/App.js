@@ -35,13 +35,13 @@ const customTheme = createMuiTheme({
 const store = configureStore({})
 
 const App = () => (
-    // <div className="App">
-    // <MuiThemeProvider theme={customTheme}>
-    <Provider store={store}>
-        <Routes />
-    </Provider>
-    //</MuiThemeProvider>
-    // </div>
+    <div className="App">
+        <MuiThemeProvider theme={customTheme}>
+            <Provider store={store}>
+                <Routes />
+            </Provider>
+        </MuiThemeProvider>
+    </div>
 );
 
 export default App;
