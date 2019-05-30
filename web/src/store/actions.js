@@ -1,12 +1,15 @@
 import { push } from 'connected-react-router';
+import firebase from 'firebase';
 
-export const signIn = () => dispatch => {
-    // Do some stuff to authenticate
-
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log('TESTE');
-            dispatch(push('/mesas'));
-        }, 3000);
-    })
+export const signIn = (email, password) => dispatch => {
+    if (email && password) {
+        try {
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(
+                    push('/mesas')
+                );
+        } catch (error) {
+            console.log(error);
+        }
+    }
 };

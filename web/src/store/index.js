@@ -6,17 +6,17 @@ import history from "../routes/history";
 
 import createRootReducer from '../reducers'
 
-const middlewares = [routerMiddleware(history),thunk];
+const middlewares = [routerMiddleware(history), thunk];
 
 // Passar os reducers como segundo parâmetro da function connectRouter()
-export default function configureStore(preloadedState){
- const store = createStore(
-   createRootReducer(history),
-   preloadedState,
-   compose(
-     applyMiddleware(...middlewares),
-   )
- )
+export default function configureStore(preloadedState) {
+  const store = createStore(
+    createRootReducer(history),
+    preloadedState,
+    compose(
+      applyMiddleware(...middlewares),
+    )
+  )
 
-   return store;
+  return store;
 };

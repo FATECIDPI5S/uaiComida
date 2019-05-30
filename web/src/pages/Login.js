@@ -12,7 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import logo from '../images/logo.png';
 
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { signIn } from '../store/actions';
 
 const styles = theme => ({
     main: {
@@ -46,6 +47,8 @@ const styles = theme => ({
     },
 });
 
+
+
 class Login extends React.Component {
 
     render() {
@@ -73,6 +76,7 @@ class Login extends React.Component {
                             label="Lembrar-me"
                         />
                         <Button
+                            onClick={th}
                             fullWidth
                             type="button"
                             variant="contained"
@@ -92,4 +96,9 @@ Login.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = state => ({ todos: state.todos });
+
+const mapDispathToProps = dispatch =>
+    bindActionCreators({ login, logout }, dispatch);
+
+export default connect(mapStateToProps)(withStyles(styles)(Login));
