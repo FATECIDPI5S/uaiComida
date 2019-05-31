@@ -1,11 +1,11 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../store/Counter';
+import { actionCreators } from '../store/Mesas';
 
-const Counter = props => (
+const Mesas = props => (
   <div>
-    <h1>Counter</h1>
+    <h1>Mesas</h1>
 
     <p>This is a simple example of a React component.</p>
 
@@ -18,4 +18,4 @@ const Counter = props => (
 export default connect(
   state => state.counter,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(Counter);
+)(Mesas);
