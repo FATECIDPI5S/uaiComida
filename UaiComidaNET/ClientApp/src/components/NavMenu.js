@@ -37,7 +37,13 @@ export default class NavMenu extends React.Component {
                                     <NavLink tag={RouterNavLink} exact className="text-white" activeClassName="font-weight-bold border" to="/">Início</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RouterNavLink} exact className="text-white" activeClassName="font-weight-bold border" to="/counter">Mesas</NavLink>
+                                    <NavLink tag={RouterNavLink} exact className="text-white" activeClassName="font-weight-bold border" to="/ambientes">Ambientes</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RouterNavLink} exact className="text-white" activeClassName="font-weight-bold border" to="/mesas">Mesas</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RouterNavLink} exact className="text-white" activeClassName="font-weight-bold border" to="/funcionarios">Funcionários</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RouterNavLink} exact className="text-white" activeClassName="font-weight-bold border" to="/fetch-data">Fetch data</NavLink>
