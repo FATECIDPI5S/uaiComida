@@ -7,11 +7,14 @@ const Ambientes = props => (
   <div>
     <h1>Ambientes</h1>
 
-    <p>This is a simple example of a React component.</p>
+    <p>Aqui você pode gerenciar os ambientes existentes no seu estabelecimento.
+      <br />
+      <a style={{ fontWeight: 'lighter', fontSize: 14 }}>Exemplo: hall de entrada, área externa, piso superior, etc.</a>
+    </p>
 
-    <p>Current count: <strong>{props.count}</strong></p>
+    <p>Mesas: <strong>{props.count}</strong></p>
 
-    <button className="btn btn-primary" onClick={props.increment}>Increment</button>
+    <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
   </div>
 );
 

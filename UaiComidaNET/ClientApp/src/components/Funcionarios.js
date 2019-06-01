@@ -7,9 +7,9 @@ const Funcionarios = props => (
   <div>
     <h1>Funcionários</h1>
 
-    <p>This is a simple example of a React component.</p>
+    <p>Aqui você pode gerenciar os funcionários da sua equipe.</p>
 
-    <p>Current count: <strong>{props.count}</strong></p>
+    <p>Funcionários: <strong>{props.count}</strong></p>
 
     <button className="btn btn-primary" onClick={props.increment}>Increment</button>
   </div>

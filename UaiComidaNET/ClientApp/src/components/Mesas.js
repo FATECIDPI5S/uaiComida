@@ -7,11 +7,11 @@ const Mesas = props => (
   <div>
     <h1>Mesas</h1>
 
-    <p>This is a simple example of a React component.</p>
+    <p>Aqui você pode cadastrar as mesas disponíveis no estabelecimento.</p>
 
-    <p>Current count: <strong>{props.count}</strong></p>
+    <p>Mesas: <strong>{props.count}</strong></p>
 
-    <button className="btn btn-primary" onClick={props.increment}>Increment</button>
+    <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
   </div>
 );
 
