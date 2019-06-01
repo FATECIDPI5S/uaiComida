@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Ambientes';
 
-const Ambientes = props => (
-  <div>
-    <h1>Ambientes</h1>
+class Ambientes extends Component {
 
-    <p>Aqui você pode gerenciar os ambientes existentes no seu estabelecimento.
-      <br />
-      <a style={{ fontWeight: 'lighter', fontSize: 14 }}>Exemplo: hall de entrada, área externa, piso superior, etc.</a>
-    </p>
+  constructor(props) {
+    super(props);
+  }
 
-    <p>Mesas: <strong>{props.count}</strong></p>
+  render() {
+    return (
+      <div>
+        <h1>Ambientes</h1>
 
-    <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
-  </div>
-);
+        <p>Aqui você pode gerenciar os ambientes existentes no seu estabelecimento.
+        <br />
+          <a style={{ fontWeight: 'lighter', fontSize: 14 }}>Exemplo: hall de entrada, área externa, piso superior, etc.</a>
+        </p>
+
+        <p>Mesas: <strong>{props.count}</strong></p>
+
+        <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
+      </div>
+    )
+  }
+}
 
 export default connect(
   state => state.counter,

@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Mesas';
 
-const Mesas = props => (
-  <div>
-    <h1>Mesas</h1>
+class Mesas extends Component {
 
-    <p>Aqui você pode cadastrar as mesas disponíveis no estabelecimento.</p>
+  constructor(props) {
+    super(props);
+  }
 
-    <p>Mesas: <strong>{props.count}</strong></p>
+  render() {
+    return (
+      <div>
+        <h1>Mesas</h1>
 
-    <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
-  </div>
-);
+        <p>Aqui você pode cadastrar as mesas disponíveis no estabelecimento.</p>
+
+        <p>Mesas: <strong>{props.count}</strong></p>
+
+        <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
+      </div>
+    )
+  }
+}
 
 export default connect(
   state => state.counter,
