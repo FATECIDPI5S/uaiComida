@@ -19,9 +19,10 @@ class Ambientes extends Component {
           <a style={{ fontWeight: 'lighter', fontSize: 14 }}>Exemplo: hall de entrada, área externa, piso superior, etc.</a>
         </p>
 
-        <p>Mesas: <strong>{props.count}</strong></p>
+        <p>Mesas: <strong>{this.props.count}</strong></p>
 
-        <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
+        <button className="btn btn-success" onClick={this.props.increment}>Incrementar</button>
+        <button className="btn btn-danger" onClick={this.props.decrement}>Decrementar</button>
       </div>
     )
   }

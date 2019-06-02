@@ -16,9 +16,9 @@ class Mesas extends Component {
 
         <p>Aqui você pode cadastrar as mesas disponíveis no estabelecimento.</p>
 
-        <p>Mesas: <strong>{props.count}</strong></p>
+        <p>Mesas: <strong>{this.props.count}</strong></p>
 
-        <button className="btn btn-primary" onClick={props.increment}>Incrementar</button>
+        <button className="btn btn-primary" onClick={this.props.increment}>Incrementar</button>
       </div>
     )
   }

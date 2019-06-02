@@ -16,9 +16,9 @@ class Funcionarios extends Component {
 
         <p>Aqui você pode gerenciar os funcionários da sua equipe.</p>
 
-        <p>Funcionários: <strong>{props.count}</strong></p>
+        <p>Funcionários: <strong>{this.props.count}</strong></p>
 
-        <button className="btn btn-primary" onClick={props.increment}>Increment</button>
+        <button className="btn btn-primary" onClick={this.props.increment}>Increment</button>
       </div>
     )
   }
