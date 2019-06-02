@@ -1,0 +1,138 @@
+teste
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAFzxApzgkzm20Wn5cHJkErz6ecCT6s61o",
+    authDomain: "uaicomida-eea47.firebaseapp.com",
+    databaseURL: "https://uaicomida-eea47.firebaseio.com",
+    projectId: "uaicomida-eea47",
+    storageBucket: "uaicomida-eea47.appspot.com",
+    messagingSenderId: "1092962940311",
+    appId: "1:1092962940311:web:ae62eb8c572a6792"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    var uid;
+    var uToken;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) 
+        {
+            uid = user.uid;
+            uToken = user.refreshToken;
+            console.log(user.uid);
+            console.log("RefreshData: " + user.refreshToken);
+            console.log("TOKEN: " + user.ra);
+        }
+    });
+
+    function singInWithCustomToken(token) {
+        firebase.auth().signInWithCustomToken(token)
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+                if (errorCode === 'auth/wrong-password') {
+                    console.log('Wrong password.');
+                } else {
+                    console.log(errorMessage);
+                }
+                console.log(error);
+            });
+    }
+
+    function signInWithEmailAndPw(email, password) {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+                if (errorCode === 'auth/wrong-password') {
+                    console.log('Wrong password.');
+                } else {
+                    console.log(errorMessage);
+                }
+                console.log(error);
+            });
+    }
+
+    function createUserWithEmailAndPw(email, password) {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                
+                if (errorCode == 'auth/weak-password') {
+                    console.log('The password is too weak.');
+                } else {
+                    console.log(errorMessage);
+                }
+                console.log(error);
+            });
+    }
+
+    firebase.auth().onIdTokenChanged(function(user) {
+        if (user) 
+        {
+            uid = user.uid;
+            uToken = user.ra;
+            console.log(user.uid);
+            console.log("RefreshData: " + user.refreshToken);
+            console.log("TOKEN: " + user.ra);
+        }
+    });
+
+    function gerarToken(){
+        $.ajax({
+            url: "/api/Usuario/GerarToken/" + uid,
+            dataType: 'json',
+            type: 'POST',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                //xhr.setRequestHeader("Authorization", "Bearer " + uToken);
+            },
+            error: function (ex) {
+                console.log(ex.status + " - " + ex.statusText);
+            },
+            success: function (data) {
+                uToken = data;
+                singInWithCustomToken(data);
+                console.log(data);
+                return data;
+            }
+        });
+    }
+
+    function retornarAmbientes(){
+        $.ajax({
+            url: "/api/Ambiente/RetornarAmbientes",
+            type: 'GET',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", "Bearer " + uToken);
+            },
+            error: function (ex) {
+                console.log(ex.status + " - " + ex.statusText);
+            },
+            success: function (data) {
+                console.log(data);
+                return data;
+            }
+        });
+    }
+</script>

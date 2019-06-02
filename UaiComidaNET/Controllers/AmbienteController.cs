@@ -2,24 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FirebaseAdmin;
 using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using UaiComidaNET.Models;
 
 namespace UaiComidaNET.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class AmbienteController: Controller
     {
         private const string COLDOC = "ambiente";
         private readonly IConfiguration _configuration;
         private FirestoreDb _firestoreDb;
+        private FirebaseApp _firebaseApp;
         
-        public AmbienteController(IConfiguration configuration, FirestoreDb firestoreDb)
+        public AmbienteController(IConfiguration configuration, FirestoreDb firestoreDb, FirebaseApp firebaseApp)
         {
             _configuration = configuration;
             _firestoreDb = firestoreDb;
+            _firebaseApp = firebaseApp;
         }
 
         [HttpGet("[action]")]
@@ -43,9 +48,8 @@ namespace UaiComidaNET.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task AddToCompany([FromBody] Ambiente ambiente)
+        public async Task Criar([FromBody] Ambiente ambiente)
         {
-            //FirestoreDb db = FirestoreDb.Create(_configuration["project-key"]);
             DocumentReference docRef = _firestoreDb.Collection(COLDOC).Document();
             await docRef.SetAsync(ambiente);
         }
