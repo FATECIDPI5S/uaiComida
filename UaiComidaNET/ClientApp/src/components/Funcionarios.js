@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Funcionarios';
 
-const Funcionarios = props => (
-  <div>
-    <h1>Funcionários</h1>
+class Funcionarios extends Component {
 
-    <p>Aqui você pode gerenciar os funcionários da sua equipe.</p>
+  constructor(props) {
+    super(props);
+  }
 
-    <p>Funcionários: <strong>{props.count}</strong></p>
+  render() {
+    return (
+      <div>
+        <h1>Funcionários</h1>
 
-    <button className="btn btn-primary" onClick={props.increment}>Increment</button>
-  </div>
-);
+        <p>Aqui você pode gerenciar os funcionários da sua equipe.</p>
+
+        <p>Funcionários: <strong>{this.props.count}</strong></p>
+
+        <button className="btn btn-primary" onClick={this.props.increment}>Increment</button>
+      </div>
+    )
+  }
+}
 
 export default connect(
   state => state.counter,
