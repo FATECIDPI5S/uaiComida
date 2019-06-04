@@ -16,8 +16,9 @@ namespace UaiComidaNET.Models
         [FirestoreProperty("ativo")]
         public bool Ativo { get; set; }
 
+        public Empresa Empresa { get; set; }
+
         [FirestoreProperty("empresa")]
-        public string Empresa { get; set; }
-    //    public Empresa Empresa { get; set; }
+        public string EmpresaKey { get { return this.Empresa.Key; } }
     }
 }
