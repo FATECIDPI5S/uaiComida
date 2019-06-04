@@ -16,7 +16,7 @@ namespace UaiComidaNET.Models
         [FirestoreProperty("cidade")]
         public string Cidade { get; set; }
 
-        [FirestoreProperty("ufs")]
+        [FirestoreProperty("uf")]
         public string UF { get; set; }
         
     }
