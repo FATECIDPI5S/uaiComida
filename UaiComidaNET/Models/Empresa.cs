@@ -25,10 +25,10 @@ namespace UaiComidaNET.Models
         public string NomeFantasia { get; set; }
 
         [FirestoreProperty("dataCriacao")]
-        public DateTime DataCriacao { get; set; }
+        public Timestamp DataCriacao { get { return this.DataAtualizacao; } set { Timestamp.GetCurrentTimestamp(); } }
 
         [FirestoreProperty("dataAtualizacao")]
-        public DateTime DataAtualizacao { get; set; }
+        public Timestamp DataAtualizacao { get; set; }
 
         [FirestoreProperty("ativo")]
         public bool Ativo { get; set; }
@@ -36,7 +36,7 @@ namespace UaiComidaNET.Models
         [FirestoreProperty("contatos")]
         public List<Contato> Contatos { get; set; }
 
-        [FirestoreProperty("endereco")]
+        [FirestoreProperty("enderecos")]
         public List<Endereco> Enderecos { get; set; }
     }
 }
