@@ -15,7 +15,7 @@ namespace UaiComidaNET.Controllers
     [Route("api/[controller]")]
     public class AmbienteController: Controller
     {
-        private const string COLDOC = "ambiente";
+        private const string COLLECTION_DOC = "ambiente";
         private readonly IConfiguration _configuration;
         private FirestoreDb _firestoreDb;
         private FirebaseApp _firebaseApp;
@@ -32,7 +32,7 @@ namespace UaiComidaNET.Controllers
         {
             List<Ambiente> ambientes = new List<Ambiente>();
 
-            Query todosAmbientes = _firestoreDb.Collection(COLDOC);
+            Query todosAmbientes = _firestoreDb.Collection(COLLECTION_DOC);
             QuerySnapshot todosAmbientesSnap = await todosAmbientes.GetSnapshotAsync();
 
             foreach (DocumentSnapshot documentSnapshot in todosAmbientesSnap.Documents)
@@ -50,7 +50,7 @@ namespace UaiComidaNET.Controllers
         [HttpPost("[action]")]
         public async Task Criar([FromBody] Ambiente ambiente)
         {
-            DocumentReference docRef = _firestoreDb.Collection(COLDOC).Document();
+            DocumentReference docRef = _firestoreDb.Collection(COLLECTION_DOC).Document();
             await docRef.SetAsync(ambiente);
         }
     }
