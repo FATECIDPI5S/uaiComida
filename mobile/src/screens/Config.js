@@ -6,75 +6,52 @@ import firebase from 'react-native-firebase'
 import color from '../styles/Colors'
 
 export default class Config extends Component {
+    constructor(){
+        super();
+        this.funcionarioRef = firebase.firestore().collection('funcionario');
+        this.funcionarioListening = null;
+        this.empresaRef = firebase.firestore().collection('empresa');
+        this.empresaListening = null;
 
-    state = {
-        apelido:'',
-        email:'',
-        empresaUid:'',
-        nomeFantasia:'',        
-        logoUri:'https://fundacaofat.org.br/wp-content/uploads/2019/03/logo-centropaulasouza-corfatec2.png'
-    };
-
-    async getUserData(){        
-        const userUID = firebase.auth().currentUser.uid
-        
-        await firebase
-                .firestore()
-                .collection("funcionario")
-                .doc(userUID)
-                .get()
-                .then(doc => {
-                    if (doc.exists) {
-                        this.setState({ apelido: doc.get('apelido') })
-                        this.setState({ email: doc.get('email') })
-                    } else {
-                        console.log("funcionario: No such document!");
-                    }
-                })
-                .catch(function(error) { 
-                    console.log(error);
-                })
-
-        await firebase
-                .firestore()
-                .collection("empresaFuncionarios")
-                .where(userUID, "==", true)
-                .get()
-                .then(query => {
-                    const doc = query.docs[0]
-                    if (doc.exists) {
-                        this.setState({ empresaUid: doc.id })
-                    } else {
-                        console.log("empresaFuncionarios: No such document!");
-                    }
-                })
-                .catch(function(error) {
-                    console.log(error);  
-                })
-
-        await firebase
-                .firestore()
-                .collection("empresa")
-                .doc(this.state.empresaUid)
-                .get()
-                .then(doc => {
-                    console.log(doc)
-                    if (doc.exists) {
-                        this.setState({ logoUri: doc.get('logoURL') })
-                        this.setState({ nomeFantasia: doc.get('nomeFantasia') })
-                    } else {
-                        console.log("funcionario: No such document!");
-                    }
-                })
-                .catch(function(error) { 
-                    console.log(error);
-                })    
+        this.state = {
+            apelido:'',
+            email:'',
+            empresaUid:'',
+            nomeFantasia:'',        
+            logoUri:'',            
+        };
     }
 
-    componentWillMount() {
-        this.getUserData()            
+    componentDidMount() {
+        this.funcionarioListening = this.funcionarioRef.doc(firebase.auth().currentUser.uid).onSnapshot(this.onCollectionFuncionarioUpdate);
     }
-      
+    
+    componentWillUnmount() {
+        this.funcionarioListening();
+        this.empresaListening();
+    }
+
+    onCollectionFuncionarioUpdate = (doc) => {
+        const { apelido, email, empresa } = doc.data();
+        this.setState({
+            apelido,
+            email,
+            empresaUid: empresa,
+        });
+        if(this.empresaListening){
+            this.empresaListening();
+        }        
+        this.empresaListening = this.empresaRef.doc(this.state.empresaUid).onSnapshot(this.onCollectionEmpresaUpdate);
+    }
+
+    onCollectionEmpresaUpdate = (doc) => {
+        const { nomeFantasia, logoURL } = doc.data();
+        this.setState({
+            nomeFantasia,
+            logoUri: logoURL,
+        });
+    }
+    
     render () {
         return (
             <View style={styles.container}>
@@ -84,9 +61,7 @@ export default class Config extends Component {
                         <View style={styles.containerInfoLogo}>
                             <Avatar
                                 rounded
-                                source={{
-                                    uri: this.state.logoUri,
-                                }}
+                                source={this.state.logoUri==''?require('../img/logo.png'):{uri:this.state.logoUri}}
                                 size={130}
                             />
                         </View>
