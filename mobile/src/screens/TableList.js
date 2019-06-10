@@ -16,20 +16,20 @@ export default class TableList extends Component {
             empresaID: '',
             ambientes: [],
             ambienteID: '',
-            mesas: [],            
+            mesas: [],
         };
     }
 
     componentDidMount() {
         this.getUserData();
     }
-    
+
     componentWillUnmount() {
         this.ambienteListening();
         this.mesaListening();
     }
 
-    async getUserData(){        
+    async getUserData(){
         await firebase.firestore().collection('funcionario').doc(firebase.auth().currentUser.uid).get()
             .then((doc) => {
                 const { empresa } = doc.data();
@@ -40,7 +40,7 @@ export default class TableList extends Component {
             .catch((error) => {
                 console.log('Erro ao recuperar dados do funcionário',error.message);
             })
-        
+
         this.ambienteListening = this.ambienteRef.where('empresa', '==', this.state.empresaID).onSnapshot(this.onCollectionAmbienteUpdate);
     }
 
@@ -51,33 +51,32 @@ export default class TableList extends Component {
 
             ambientes.push({
                 key: doc.id,
-                doc, // DocumentSnapshot
                 nome,
             });
-        });      
+        });
         this.setState({
             ambientes,
         });
     }
 
     onPickerValueChange = (itemValue) => {
-        this.setState({ ambienteID: itemValue })
+        this.setState({ ambienteID: itemValue });
         this.mesaListening = this.mesaRef.where('ambiente', '==', itemValue).onSnapshot(this.onCollectionMesaUpdate);
     }
 
     onCollectionMesaUpdate = (querySnapshot) => {
         const mesas = [];
         querySnapshot.forEach((doc) => {
-            const { nome, emUso, valor } = doc.data();
+            const { nome, conta, valor } = doc.data();
 
             mesas.push({
                 key: doc.id,
-                doc, // DocumentSnapshot                
+                doc, // DocumentSnapshot
                 nome,
-                emUso,
-                valor,                
+                valor,
+                conta,
             });
-        });      
+        });
         this.setState({
             mesas,
         });
@@ -91,18 +90,33 @@ export default class TableList extends Component {
                 style={styles.mesa}
                 onPress={
                     async () => {
-                        if(!item.emUso){
+                        if(item.conta==''){
+                            let contaID = '';
+                            await firebase.firestore().collection('conta').add({
+                                dataAbertura: firebase.firestore.Timestamp.fromDate(new Date()),
+                                dataFechamento: null,
+                                desconto: 0,
+                                pessoas: 0,
+                                valor: 0,
+                            })
+                            .then((docRef) => {
+                                contaID = docRef.id
+                            })
+
                             await item.doc.ref.update({
-                                emUso: true,
+                                conta: contaID,
                             });
+
+                            this.props.navigation.navigate('Bill', { mesaID: item.key, contaID: contaID });
+                        }else if(item.conta!=''){
+                            this.props.navigation.navigate('Bill', { mesaID: item.key, contaID: item.conta });
                         };
-                        this.props.navigation.navigate('Bill', { id: item.id, });
                 }}
             >
                 <View
                     style={[
                         styles.mesaTitle,
-                        {backgroundColor: item.emUso==false?'green':color.red},
+                        {backgroundColor: item.conta==''?'green':color.red},
                     ]}
                 >
                     <Text
@@ -117,14 +131,14 @@ export default class TableList extends Component {
                 >
                     <Icon
                         name='money'
-                        color='green'
+                        color={item.conta==''?'green':color.red}
                         size={30}
                     />
                     <Text
                         numberOfLines={1}
                         style={styles.precoText}
                     >
-                        Valor: {item.valor==''?'0.00':item.valor}
+                        Valor: {item.valor}
                     </Text>
                 </View>
             </TouchableOpacity>
