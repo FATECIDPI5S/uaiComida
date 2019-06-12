@@ -27,8 +27,9 @@ export default class Config extends Component {
     }
     
     componentWillUnmount() {
-        this.funcionarioListening();
+        console.log('ConfigcomponentWillUnmount',new Date());
         this.empresaListening();
+        this.funcionarioListening();        
     }
 
     onCollectionFuncionarioUpdate = (doc) => {

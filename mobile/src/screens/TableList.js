@@ -25,8 +25,9 @@ export default class TableList extends Component {
     }
 
     componentWillUnmount() {
-        this.ambienteListening();
+        console.log('TableListcomponentWillUnmount',new Date());
         this.mesaListening();
+        this.ambienteListening();
     }
 
     async getUserData(){

@@ -3,7 +3,7 @@ import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, 
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import LoginScreen from './screens/Login'
 import TableListScreen from './screens/TableList'
-import TableScreen from './screens/Table'
+import BillScreen from './screens/Bill'
 import AddItemScreen from './screens/AddItem'
 import ProductListScreen from './screens/ProductList'
 import KitchenListScreen from './screens/KitchenList'
@@ -25,8 +25,8 @@ const TableStack = createStackNavigator({
             header: null,
         }
     },
-    Table: {
-        screen: TableScreen,
+    Bill: {
+        screen: BillScreen,
     },
     AddItem: {
         screen: AddItemScreen,
