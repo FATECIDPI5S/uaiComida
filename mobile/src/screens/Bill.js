@@ -199,8 +199,6 @@ const styles = StyleSheet.create({
     itemContainer: {
         flex: 7,
         borderRadius: 10,
-        borderWidth:1,
-        borderColor:'#CCC',
     },
     buttonContainer: {
         flex: 1,
