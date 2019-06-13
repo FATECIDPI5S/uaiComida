@@ -139,7 +139,7 @@ export default class TableList extends Component {
                         numberOfLines={1}
                         style={styles.precoText}
                     >
-                        Valor: {item.valor}
+                        {item.valor}
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -220,10 +220,11 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row'
         ,alignItems:'center'
-        ,justifyContent:'space-around',
+        ,justifyContent:'center',
     },
     precoText: {
         color: color.black,
         fontSize: 16,
+        marginLeft: 10,
     },
 });
