@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Button, } from 'react-native-elements';
 import moment from 'moment';
 import firebase from 'react-native-firebase'
@@ -19,6 +19,15 @@ export default class Bill extends Component {
             desconto:0.00,
             pessoas:0,
             valor:0.00,
+            docs: [
+                {key: 'Pedido 011111111',price:'10000000,00'},
+                {key: 'Pedido 02',price:'132424,00'},
+                {key: 'Pedido 03',price:'324324,00'},
+                {key: 'Pedido 04',price:'223,00'},
+                {key: 'Pedido 05',price:'234,00'},
+                {key: 'Pedido 06',price:'545,00'},
+                {key: 'Pedido 07',price:'64566,00'},
+            ],
         };
     }
 
@@ -48,7 +57,7 @@ export default class Bill extends Component {
     onCollectionContaUpdate = (doc) => {
         const { dataAbertura, desconto, pessoas, valor } = doc.data();
         this.setState({
-            tempo: moment.utc(moment(new Date(),"DD/MM/YYYY HH:mm:ss").diff(moment(dataAbertura.toDate(),"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss"),
+            tempo: moment.utc(moment(new Date(),'DD/MM/YYYY HH:mm:ss').diff(moment(dataAbertura.toDate(),'DD/MM/YYYY HH:mm:ss'))).format('HH:mm:ss'),
             desconto,
             pessoas,
             valor,
@@ -63,45 +72,104 @@ export default class Bill extends Component {
         this.props.navigation.goBack();
     }
 
+    renderPedido = ({ item }) => (
+        <View style={styles.pedidoContainer}>
+            <View style={{flex: 3,justifyContent:'center'}}>
+                <Text style={styles.infoText} numberOfLines={1}>{item.key}</Text>
+            </View>
+            <View style={{flex: 3,justifyContent:'center'}}>
+                <Text style={styles.infoText} numberOfLines={1}>{item.price}</Text>
+            </View>
+            <TouchableOpacity style={styles.button}>
+                <Icon
+                    name='remove'
+                    color={color.white}
+                    size={25}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+                <Icon
+                    name='send'
+                    color={color.white}
+                    size={25}
+                />
+            </TouchableOpacity>
+        </View>
+    )
+
     render() {
         return (
-            <View style={{ flex: 1 }}>    
-
+            <View style={styles.container}>
                 <View style={styles.infoContainer}>
                     <View style={styles.info}>
-                        <Icon style={styles.infoIcon} name="group" color="#ff3f34" size={20} />
+                        <Icon
+                            name='group'
+                            color='#ff3f34'
+                            size={30}
+                        />
                         <Text style={styles.infoText}>
                             {this.state.pessoas}
                         </Text>
                     </View>
                     <View style={styles.info}>
-                        <Icon style={styles.infoIcon} name="clock-o" color="#ff3f34" size={20} />
+                        <Icon
+                            name='clock-o'
+                            color='#ff3f34'
+                            size={30}
+                        />
                         <Text style={styles.infoText}>
                             {this.state.tempo}
                         </Text>
                     </View>
                 </View>
 
-                <View style={styles.itemContainer}></View>
+                <View style={styles.itemContainer}>
+                    <FlatList
+                        data={this.state.docs}
+                        renderItem={this.renderPedido}
+                    />
+                </View>
 
-                <View style={styles.discountContainer}>                
-                    <Text style={styles.discountText}>Desconto: R$ {this.state.desconto}</Text>
-                    <Text style={styles.discountText}>Total: R$ {this.state.valor}</Text>
+                <View style={styles.infoContainer}>
+                    <View style={styles.info}>
+                        <Text style={styles.infoText}>
+                            Desconto: R$ {this.state.desconto}
+                        </Text>
+                    </View>
+                    <View style={styles.info}>
+                        <Text style={styles.infoText}>
+                            Total: R$ {this.state.valor}
+                        </Text>
+                    </View>
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Icon style={styles.buttonIcon} name="remove" color="#ff3f34" size={20} />
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => this.removerConta()}
+                    >
+                        <Icon
+                            name='trash'
+                            color={color.white}
+                            size={30}
+                        />
                     </TouchableOpacity> 
                     <TouchableOpacity style={styles.button}>
-                        <Icon style={styles.buttonIcon} name="check" color="#ff3f34" size={20} />
+                        <Icon
+                            name='check'
+                            color={color.white}
+                            size={30}
+                        />
                     </TouchableOpacity>                    
                     <TouchableOpacity style={styles.button}
                         onPress={() => {}/*this.props.navigation.navigate('AddItem', { title: `Adicionar itens a ${this.props.navigation.state.params.table.mesa.toLowerCase()}`, table: this.props.navigation.state.params.table })*/}>
-                        <Icon style={styles.buttonIcon} name="cart-plus" color="#ff3f34" size={20} />
+                        <Icon
+                            name='cart-plus'
+                            color={color.white}
+                            size={30}
+                        />
                     </TouchableOpacity>
                 </View>
-
             </View >
         );
     };
@@ -109,81 +177,49 @@ export default class Bill extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10,
+    },
     infoContainer: {
+        flex: 1,
+        flexGrow:1,
         flexDirection: 'row',
-        alignSelf: 'center',
-        marginTop: 10,
     },
     info: {
+        flex:1,
         flexDirection: 'row',
-        marginHorizontal: 20,
-    },
-    infoIcon: {
-        alignSelf: 'center',
+        justifyContent:'center',
+        alignItems:'center',
     },
     infoText: {
         fontSize: 20,
-        marginLeft: 5,
+        marginLeft: 10,
     },
     itemContainer: {
-        alignSelf: 'center',
-        borderWidth: 1,
-        borderColor: '#CCC',
-        width: '92%',
-        height: '50%',
+        flex: 7,
         borderRadius: 10,
-        marginTop: 20,
-    },
-    discountContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 10,
-        marginHorizontal: 75,
-    },
-    discountText: {
-        fontSize: 18,
-        textAlign: 'justify'
-    },
-    discountTextSymbol: {
-        fontSize: 18,
-        textAlign: 'right'
-    },
-    discountInputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    discountInputText: {
-        fontSize: 18,
-        textAlign: 'center',
+        borderWidth:1,
+        borderColor:'#CCC',
     },
     buttonContainer: {
         flex: 1,
         flexDirection: 'row',
-        marginBottom: 20,
     },
     button: {
-        flex:1,
-        flexDirection: 'row',
-        backgroundColor: '#ff3f34',
-        borderWidth: 1,
-        borderColor: '#CCC',
-        height: 50,
-        width: '92%',
-        alignSelf: 'center',
+        flex: 1,
+        backgroundColor: color.red,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        marginVertical: 5,
+        margin:5,
     },
-    buttonIcon: {
-        color: '#FFF',
-        alignSelf: 'center',
-    },
-    buttonText: {
-        fontSize: 16,
-        marginLeft: 5,
-        textAlign: 'center',
-        color: '#FFF',
+    pedidoContainer: {
+        flexDirection: 'row',
+        height: 50,
+        borderWidth: 1,
+        borderColor: color.red,
+        borderRadius: 5,
+        marginBottom: 10
     },
 });
