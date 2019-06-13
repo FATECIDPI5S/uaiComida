@@ -62,6 +62,9 @@ export default class TableList extends Component {
 
     onPickerValueChange = (itemValue) => {
         this.setState({ ambienteID: itemValue });
+        if(this.mesaListening){
+            this.mesaListening();
+        }        
         this.mesaListening = this.mesaRef.where('ambiente', '==', itemValue).onSnapshot(this.onCollectionMesaUpdate);
     }
 
