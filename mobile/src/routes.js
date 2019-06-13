@@ -118,7 +118,7 @@ const AppStack = createBottomTabNavigator(
                     iconName = `settings${focused ? '' : '-outline'}`;
                 break;
             }
-            return <IconMCI name={iconName} size={25} color={tintColor} />;
+            return <IconMCI name={iconName} size={30} color={tintColor} />;
         },
     }),
     tabBarOptions: {
