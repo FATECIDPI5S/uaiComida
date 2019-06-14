@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class ProductList extends Component {
     constructor(){
         super();
-        this.produtoRef = firebase.firestore().collection('produto');
+        this.produtoRef = firebase.firestore().collection('produto').where('ativo', '==', true);
         this.produtoListening = null;
 
         this.state = {
@@ -45,7 +45,6 @@ export default class ProductList extends Component {
     onCollectionProdutoUpdate = (querySnapshot) => {
         const produtos = [];
         querySnapshot.forEach((doc) => {
-            console.log(doc)
             const { codigo, descricao, nome, precoVenda } = doc.data();
 
             produtos.push({
@@ -64,20 +63,27 @@ export default class ProductList extends Component {
 
     renderItem = ({ item }) => (
         <View style={styles.produtoContainer}>
-            <View style={{flex: 3,justifyContent:'center'}}>
+            <View style={{flex: 4,justifyContent:'center'}}>
                 <Text style={styles.infoText} numberOfLines={1}>{item.nome}</Text>
             </View>
-            <View style={{flex: 3,justifyContent:'center'}}>
+            <View style={{flex: 2,justifyContent:'center'}}>
                 <Text style={styles.infoText} numberOfLines={1}>{item.precoVenda}</Text>
             </View>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={()=> this.props.navigation.navigate('Ingredients', { produtoID: item.key })}            
+            >
                 <Icon
                     name='leanpub'
                     color={color.white}
                     size={25}
                 />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={()=> this.props.navigation.navigate('Additionals', { produtoID: item.key })}
+            
+            >
                 <Icon
                     name='list-alt'
                     color={color.white}

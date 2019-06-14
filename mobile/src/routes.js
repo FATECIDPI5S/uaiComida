@@ -6,6 +6,8 @@ import TableListScreen from './screens/TableList'
 import BillScreen from './screens/Bill'
 import AddItemScreen from './screens/AddItem'
 import ProductListScreen from './screens/ProductList'
+import IngredientsScreen from './screens/Ingredients'
+import AdditionalsScreen from './screens/Additionals'
 import KitchenListScreen from './screens/KitchenList'
 import ConfigScreen from './screens/Config'
 
@@ -46,6 +48,18 @@ const MenuStack = createStackNavigator({
         screen: ProductListScreen,
         navigationOptions:{
             header: null,
+        }
+    },
+    Ingredients: {
+        screen: IngredientsScreen,
+        navigationOptions:{
+            title: 'Ingredientes',
+        }
+    },
+    Additionals: {
+        screen: AdditionalsScreen,
+        navigationOptions:{
+            title: 'Adicionais',
         }
     },
 },{
