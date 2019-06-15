@@ -3,9 +3,11 @@ import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, 
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import LoginScreen from './screens/Login'
 import TableListScreen from './screens/TableList'
-import TableScreen from './screens/Table'
+import BillScreen from './screens/Bill'
 import AddItemScreen from './screens/AddItem'
 import ProductListScreen from './screens/ProductList'
+import IngredientsScreen from './screens/Ingredients'
+import AdditionalsScreen from './screens/Additionals'
 import KitchenListScreen from './screens/KitchenList'
 import ConfigScreen from './screens/Config'
 
@@ -25,8 +27,8 @@ const TableStack = createStackNavigator({
             header: null,
         }
     },
-    Table: {
-        screen: TableScreen,
+    Bill: {
+        screen: BillScreen,
     },
     AddItem: {
         screen: AddItemScreen,
@@ -46,6 +48,18 @@ const MenuStack = createStackNavigator({
         screen: ProductListScreen,
         navigationOptions:{
             header: null,
+        }
+    },
+    Ingredients: {
+        screen: IngredientsScreen,
+        navigationOptions:{
+            title: 'Ingredientes',
+        }
+    },
+    Additionals: {
+        screen: AdditionalsScreen,
+        navigationOptions:{
+            title: 'Adicionais',
         }
     },
 },{
@@ -118,7 +132,7 @@ const AppStack = createBottomTabNavigator(
                     iconName = `settings${focused ? '' : '-outline'}`;
                 break;
             }
-            return <IconMCI name={iconName} size={25} color={tintColor} />;
+            return <IconMCI name={iconName} size={30} color={tintColor} />;
         },
     }),
     tabBarOptions: {
