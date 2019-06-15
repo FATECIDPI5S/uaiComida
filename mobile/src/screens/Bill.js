@@ -13,9 +13,11 @@ export default class Bill extends Component {
         this.mesaListening = null;
         this.contaRef = firebase.firestore().collection('conta')
         this.contaListening = null;
+        this.interval = null;
 
         this.state = {
             tempo:'',
+            dataAbertura:'',
             desconto:0.00,
             pessoas:0,
             valor:0.00,
@@ -41,12 +43,22 @@ export default class Bill extends Component {
     componentDidMount(){
         this.mesaListening = this.mesaRef.doc(this.props.navigation.state.params.mesaID).onSnapshot(this.onCollectionMesaUpdate);
         this.contaListening = this.contaRef.doc(this.props.navigation.state.params.contaID).onSnapshot(this.onCollectionContaUpdate);
+
+        this.interval = setInterval(
+            () => {
+                if(this.state.dataAbertura != ''){
+                    this.setState({
+                        tempo: moment.utc(moment(new Date(),'DD/MM/YYYY HH:mm:ss').diff(moment(this.state.dataAbertura.toDate(),'DD/MM/YYYY HH:mm:ss'))).format('HH:mm:ss'),
+                    })
+                }                
+            },1000)
     }
 
     componentWillUnmount() {
         console.log('BillcomponentWillUnmount',new Date());
         this.mesaListening();
-        this.contaListening();        
+        this.contaListening();
+        clearInterval(this.interval);
     }
 
     onCollectionMesaUpdate = (doc) => {
@@ -57,7 +69,7 @@ export default class Bill extends Component {
     onCollectionContaUpdate = (doc) => {
         const { dataAbertura, desconto, pessoas, valor } = doc.data();
         this.setState({
-            tempo: moment.utc(moment(new Date(),'DD/MM/YYYY HH:mm:ss').diff(moment(dataAbertura.toDate(),'DD/MM/YYYY HH:mm:ss'))).format('HH:mm:ss'),
+            dataAbertura,
             desconto,
             pessoas,
             valor,
